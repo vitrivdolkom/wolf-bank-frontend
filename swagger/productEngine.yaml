@@ -1,0 +1,908 @@
+openapi: 3.0.1
+info:
+  title: WolfBankGateway
+  version: '1.0'
+paths:
+  '/api/v1/Application/{id}':
+    get:
+      tags:
+        - Application
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/ApplicationResponse'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApplicationResponse'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/ApplicationResponse'
+    delete:
+      tags:
+        - Application
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+  /api/v1/Application:
+    post:
+      tags:
+        - Application
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateApplicationRequest'
+          text/json:
+            schema:
+              $ref: '#/components/schemas/CreateApplicationRequest'
+          application/*+json:
+            schema:
+              $ref: '#/components/schemas/CreateApplicationRequest'
+      responses:
+        '200':
+          description: OK
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/ApplicationResponse'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApplicationResponse'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/ApplicationResponse'
+    put:
+      tags:
+        - Application
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateApplicationRequest'
+          text/json:
+            schema:
+              $ref: '#/components/schemas/UpdateApplicationRequest'
+          application/*+json:
+            schema:
+              $ref: '#/components/schemas/UpdateApplicationRequest'
+      responses:
+        '200':
+          description: OK
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/ApplicationResponse'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApplicationResponse'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/ApplicationResponse'
+    get:
+      tags:
+        - Application
+      parameters:
+        - name: page
+          in: query
+          schema:
+            type: integer
+            format: int32
+        - name: pageSize
+          in: query
+          schema:
+            type: integer
+            format: int32
+        - name: status
+          in: query
+          schema:
+            type: array
+            items:
+              $ref: '#/components/schemas/ApplicationStatus'
+      responses:
+        '200':
+          description: OK
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/ListApplicationResponse'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListApplicationResponse'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/ListApplicationResponse'
+  /api/v1/BankAccount:
+    post:
+      tags:
+        - BankAccount
+      responses:
+        '200':
+          description: OK
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/BankAccountDto'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BankAccountDto'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/BankAccountDto'
+    get:
+      tags:
+        - BankAccount
+      parameters:
+        - name: offset
+          in: query
+          schema:
+            type: integer
+            format: int64
+        - name: limit
+          in: query
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: OK
+          content:
+            text/plain:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/BankAccountDto'
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/BankAccountDto'
+            text/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/BankAccountDto'
+  '/api/v1/BankAccount/{bank_account_id}':
+    delete:
+      tags:
+        - BankAccount
+      parameters:
+        - name: bank_account_id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+    get:
+      tags:
+        - BankAccount
+      parameters:
+        - name: bank_account_id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/BankAccountDto'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BankAccountDto'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/BankAccountDto'
+  '/api/v1/BankAccount/{bank_account_id}/history':
+    get:
+      tags:
+        - BankAccount
+      parameters:
+        - name: bank_account_id
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: offset
+          in: query
+          schema:
+            type: integer
+            format: int64
+        - name: limit
+          in: query
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: OK
+          content:
+            text/plain:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Transaction'
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Transaction'
+            text/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Transaction'
+  '/api/v1/Credit/{agreementId}':
+    get:
+      tags:
+        - Credit
+      parameters:
+        - name: agreementId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/GetCreditResponse'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetCreditResponse'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/GetCreditResponse'
+  /api/v1/Credit:
+    get:
+      tags:
+        - Credit
+      parameters:
+        - name: offset
+          in: query
+          schema:
+            type: integer
+            format: int64
+        - name: limit
+          in: query
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: OK
+          content:
+            text/plain:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/GetCreditResponse'
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/GetCreditResponse'
+            text/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/GetCreditResponse'
+  '/api/v1/Credit/{agreementId}/payments':
+    get:
+      tags:
+        - Credit
+      parameters:
+        - name: agreementId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/GetPaymentResponse'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetPaymentResponse'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/GetPaymentResponse'
+  '/api/v1/Payment/{bank_account_id}/deposit':
+    post:
+      tags:
+        - Payment
+      parameters:
+        - name: bank_account_id
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PaymentModel'
+          text/json:
+            schema:
+              $ref: '#/components/schemas/PaymentModel'
+          application/*+json:
+            schema:
+              $ref: '#/components/schemas/PaymentModel'
+      responses:
+        '200':
+          description: OK
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/DepositResponse'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DepositResponse'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/DepositResponse'
+  '/api/v1/Payment/{bank_account_id}/withdraw':
+    post:
+      tags:
+        - Payment
+      parameters:
+        - name: bank_account_id
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PaymentModel'
+          text/json:
+            schema:
+              $ref: '#/components/schemas/PaymentModel'
+          application/*+json:
+            schema:
+              $ref: '#/components/schemas/PaymentModel'
+      responses:
+        '200':
+          description: OK
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/WithdrawResponse'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WithdrawResponse'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/WithdrawResponse'
+  '/api/v1/Payment/{agreement_id}/credit':
+    post:
+      tags:
+        - Payment
+      parameters:
+        - name: agreement_id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/PayCreditResponse'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PayCreditResponse'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/PayCreditResponse'
+  /api/v1/Product:
+    post:
+      tags:
+        - Product
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateProductRequest'
+          text/json:
+            schema:
+              $ref: '#/components/schemas/CreateProductRequest'
+          application/*+json:
+            schema:
+              $ref: '#/components/schemas/CreateProductRequest'
+      responses:
+        '200':
+          description: OK
+    get:
+      tags:
+        - Product
+      parameters:
+        - name: offset
+          in: query
+          schema:
+            type: integer
+            format: int64
+        - name: limit
+          in: query
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: OK
+          content:
+            text/plain:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ProductDto'
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ProductDto'
+            text/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ProductDto'
+  '/api/v1/Product/{code}':
+    get:
+      tags:
+        - Product
+      parameters:
+        - name: code
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/ProductDto'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProductDto'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/ProductDto'
+  /api/v1/Product/calculate:
+    post:
+      tags:
+        - Product
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CalculateRequest'
+          text/json:
+            schema:
+              $ref: '#/components/schemas/CalculateRequest'
+          application/*+json:
+            schema:
+              $ref: '#/components/schemas/CalculateRequest'
+      responses:
+        '200':
+          description: OK
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/CalculateResponse'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CalculateResponse'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/CalculateResponse'
+components:
+  schemas:
+    AgreementStatus:
+      enum:
+        - 0
+        - 1
+        - 2
+      type: integer
+      format: int32
+    ApplicationResponse:
+      type: object
+      properties:
+        id:
+          type: string
+          nullable: true
+        amount:
+          $ref: '#/components/schemas/Decimal'
+        term:
+          type: integer
+          format: int32
+        interest:
+          $ref: '#/components/schemas/Decimal'
+        status:
+          $ref: '#/components/schemas/ApplicationStatus'
+        createdAt:
+          $ref: '#/components/schemas/Timestamp'
+        updatedAt:
+          $ref: '#/components/schemas/Timestamp'
+      additionalProperties: false
+    ApplicationStatus:
+      enum:
+        - 0
+        - 1
+        - 2
+        - 3
+        - 4
+      type: integer
+      format: int32
+    BankAccountDto:
+      type: object
+      properties:
+        bankAccountId:
+          type: string
+          nullable: true
+        agreementId:
+          type: string
+          nullable: true
+        clientId:
+          type: string
+          nullable: true
+        balance:
+          $ref: '#/components/schemas/DecimalValue'
+        type:
+          $ref: '#/components/schemas/BankAccountType'
+        status:
+          $ref: '#/components/schemas/BankAccountStatus'
+        createdAt:
+          $ref: '#/components/schemas/Timestamp'
+        updatedAt:
+          $ref: '#/components/schemas/Timestamp'
+      additionalProperties: false
+    BankAccountStatus:
+      enum:
+        - 0
+        - 1
+        - 2
+      type: integer
+      format: int32
+    BankAccountType:
+      enum:
+        - 0
+        - 1
+      type: integer
+      format: int32
+    CalculateRequest:
+      type: object
+      properties:
+        clientId:
+          type: string
+          nullable: true
+        term:
+          type: integer
+          format: int32
+        amount:
+          $ref: '#/components/schemas/DecimalValue'
+      additionalProperties: false
+    CalculateResponse:
+      type: object
+      properties:
+        code:
+          type: string
+          nullable: true
+        term:
+          type: integer
+          format: int32
+        amount:
+          $ref: '#/components/schemas/DecimalValue'
+        interest:
+          $ref: '#/components/schemas/DecimalValue'
+        originationAmount:
+          $ref: '#/components/schemas/DecimalValue'
+      additionalProperties: false
+    CreateApplicationRequest:
+      type: object
+      properties:
+        amount:
+          $ref: '#/components/schemas/Decimal'
+        term:
+          type: integer
+          format: int32
+        interest:
+          $ref: '#/components/schemas/Decimal'
+      additionalProperties: false
+    CreateProductRequest:
+      type: object
+      properties:
+        idempotencyKey:
+          type: string
+          nullable: true
+        clientId:
+          type: string
+          nullable: true
+        code:
+          type: string
+          nullable: true
+        minTerm:
+          type: integer
+          format: int32
+        maxTerm:
+          type: integer
+          format: int32
+        minPrincipalAmount:
+          $ref: '#/components/schemas/DecimalValue'
+        maxPrincipalAmount:
+          $ref: '#/components/schemas/DecimalValue'
+        minInterest:
+          $ref: '#/components/schemas/DecimalValue'
+        maxInterest:
+          $ref: '#/components/schemas/DecimalValue'
+        minOriginationAmount:
+          $ref: '#/components/schemas/DecimalValue'
+        maxOriginationAmount:
+          $ref: '#/components/schemas/DecimalValue'
+      additionalProperties: false
+    Decimal:
+      type: object
+      properties:
+        unscaled:
+          type: integer
+          format: int64
+        scale:
+          type: integer
+          format: int32
+      additionalProperties: false
+    DecimalValue:
+      type: object
+      properties:
+        scale:
+          type: integer
+          format: int32
+        precision:
+          type: integer
+          format: int32
+        value:
+          type: array
+          items:
+            type: integer
+            format: int32
+          nullable: true
+      additionalProperties: false
+    DepositResponse:
+      type: object
+      properties:
+        transactionId:
+          type: string
+          nullable: true
+        newBalance:
+          $ref: '#/components/schemas/DecimalValue'
+        message:
+          type: string
+          nullable: true
+      additionalProperties: false
+    GetCreditResponse:
+      type: object
+      properties:
+        agreementId:
+          type: string
+          nullable: true
+        productCode:
+          type: string
+          nullable: true
+        clientId:
+          type: string
+          nullable: true
+        interest:
+          $ref: '#/components/schemas/DecimalValue'
+        term:
+          type: integer
+          format: int32
+        principalAmount:
+          $ref: '#/components/schemas/DecimalValue'
+        originationAmount:
+          $ref: '#/components/schemas/DecimalValue'
+        status:
+          $ref: '#/components/schemas/AgreementStatus'
+        disbursementDate:
+          $ref: '#/components/schemas/Timestamp'
+        nextPaymentDate:
+          $ref: '#/components/schemas/Timestamp'
+      additionalProperties: false
+    GetPaymentResponse:
+      type: object
+      properties:
+        agreementId:
+          type: string
+          nullable: true
+        version:
+          type: string
+          nullable: true
+        schedulePayments:
+          type: array
+          items:
+            $ref: '#/components/schemas/SchedulePayment'
+          nullable: true
+          readOnly: true
+      additionalProperties: false
+    ListApplicationResponse:
+      type: object
+      properties:
+        applications:
+          type: array
+          items:
+            $ref: '#/components/schemas/ApplicationResponse'
+          nullable: true
+          readOnly: true
+        page:
+          type: integer
+          format: int32
+        pageSize:
+          type: integer
+          format: int32
+        totalCount:
+          type: integer
+          format: int32
+        totalPages:
+          type: integer
+          format: int32
+      additionalProperties: false
+    PayCreditResponse:
+      type: object
+      properties:
+        transactionId:
+          type: string
+          nullable: true
+        newBalance:
+          $ref: '#/components/schemas/DecimalValue'
+        message:
+          type: string
+          nullable: true
+      additionalProperties: false
+    PaymentModel:
+      type: object
+      properties:
+        amount:
+          type: number
+          format: double
+      additionalProperties: false
+    ProductDto:
+      type: object
+      properties:
+        code:
+          type: string
+          nullable: true
+        minTerm:
+          type: integer
+          format: int32
+        maxTerm:
+          type: integer
+          format: int32
+        minPrincipalAmount:
+          $ref: '#/components/schemas/DecimalValue'
+        maxPrincipalAmount:
+          $ref: '#/components/schemas/DecimalValue'
+        minInterest:
+          $ref: '#/components/schemas/DecimalValue'
+        maxInterest:
+          $ref: '#/components/schemas/DecimalValue'
+        minOriginationAmount:
+          $ref: '#/components/schemas/DecimalValue'
+        maxOriginationAmount:
+          $ref: '#/components/schemas/DecimalValue'
+      additionalProperties: false
+    SchedulePayment:
+      type: object
+      properties:
+        status:
+          $ref: '#/components/schemas/SchedulePaymentStatus'
+        paymentDate:
+          $ref: '#/components/schemas/Timestamp'
+        periodPayment:
+          $ref: '#/components/schemas/DecimalValue'
+        interestPayment:
+          $ref: '#/components/schemas/DecimalValue'
+        principalPayment:
+          $ref: '#/components/schemas/DecimalValue'
+        periodNumber:
+          type: integer
+          format: int32
+      additionalProperties: false
+    SchedulePaymentStatus:
+      enum:
+        - 0
+        - 1
+        - 2
+      type: integer
+      format: int32
+    Timestamp:
+      type: object
+      properties:
+        seconds:
+          type: integer
+          format: int64
+        nanos:
+          type: integer
+          format: int32
+      additionalProperties: false
+    Transaction:
+      type: object
+      properties:
+        transactionId:
+          type: string
+          nullable: true
+        fromBankAccountId:
+          type: string
+          nullable: true
+        toBankAccountId:
+          type: string
+          nullable: true
+        type:
+          $ref: '#/components/schemas/TransactionType'
+        amount:
+          $ref: '#/components/schemas/DecimalValue'
+        description:
+          type: string
+          nullable: true
+        createdAt:
+          $ref: '#/components/schemas/Timestamp'
+      additionalProperties: false
+    TransactionType:
+      enum:
+        - 0
+        - 1
+        - 2
+        - 3
+        - 4
+      type: integer
+      format: int32
+    UpdateApplicationRequest:
+      type: object
+      properties:
+        id:
+          type: string
+          nullable: true
+        amount:
+          $ref: '#/components/schemas/Decimal'
+        term:
+          type: integer
+          format: int32
+        interest:
+          $ref: '#/components/schemas/Decimal'
+      additionalProperties: false
+    WithdrawResponse:
+      type: object
+      properties:
+        transactionId:
+          type: string
+          nullable: true
+        newBalance:
+          $ref: '#/components/schemas/DecimalValue'
+        message:
+          type: string
+          nullable: true
+      additionalProperties: false
