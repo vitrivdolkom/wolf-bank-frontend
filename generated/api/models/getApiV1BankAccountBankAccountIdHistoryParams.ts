@@ -8,4 +8,5 @@
 export type GetApiV1BankAccountBankAccountIdHistoryParams = {
   offset?: number;
   limit?: number;
+  userId?: string;
 };

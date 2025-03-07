@@ -1,29 +1,21 @@
 import { useData } from 'vike-react/useData';
 
 import { ApplicationCard, BankAccountCard, CreditCard } from '@/components';
-import { ROUTES } from '@/utils/constants';
 
-import type { MainPageData } from './+data';
+import type { UserPageData } from './+data';
 
-import { useMainPage } from './useMainPage';
-
-const MainPage = () => {
-  const { bankAccounts, credits, applications } = useData<MainPageData>();
-  const { functions } = useMainPage();
+const UserPage = () => {
+  const { bankAccounts, credits, applications } = useData<UserPageData>();
 
   return (
     <div className='container mx-auto px-4 py-8'>
-      <h1 className='text-3xl font-bold mb-8 text-center'>Финансовая Панель</h1>
-      <div className='flex gap-4 justify-center mb-8'></div>
+      <h1 className='text-3xl font-bold mb-8 text-center'>Информация о пользователе</h1>
 
       <div className='mb-6'>
         <div className='collapse collapse-arrow bg-base-200'>
           <input defaultChecked type='checkbox' />
           <div className='collapse-title text-xl font-medium'>Кредиты ({credits.length})</div>
           <div className='collapse-content collapse-open'>
-            <a href={ROUTES.CREATE_APPLICATION} className='btn btn-primary'>
-              Оформить кредит
-            </a>
             <div className='space-y-4 mt-4'>
               {credits.map((credit) => (
                 <CreditCard key={credit.agreementId} credit={credit} />
@@ -40,13 +32,6 @@ const MainPage = () => {
             Банковские счета ({bankAccounts.length})
           </div>
           <div className='collapse-content'>
-            <button
-              className='btn btn-primary'
-              type='button'
-              onClick={functions.onOpenBankAccountClick}
-            >
-              Открыть счет
-            </button>
             <div className='space-y-4 mt-4'>
               {bankAccounts.map((account, index) => (
                 <BankAccountCard key={account.bankAccountId} index={index} bankAccount={account} />
@@ -73,4 +58,4 @@ const MainPage = () => {
   );
 };
 
-export default MainPage;
+export default UserPage;

@@ -36,7 +36,7 @@ export const useBankAccountActions = ({ bankAccount }: UseBankAccountActionsPara
     depositIdempotencyKey.current = generateUUID();
     toast.success('Внесение средств прошло успешно');
     setDepositAmount('');
-    await reload();
+    // await reload();
   };
 
   const onWithdraw = async () => {

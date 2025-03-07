@@ -8,4 +8,5 @@
 export type GetApiV1CreditParams = {
   offset?: number;
   limit?: number;
+  userId?: string;
 };

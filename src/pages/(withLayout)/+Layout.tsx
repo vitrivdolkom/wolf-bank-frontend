@@ -11,6 +11,9 @@ interface NavigationLayoutProps {
 
 const NavigationLayout = ({ children }: NavigationLayoutProps) => {
   const pageContext = usePageContext();
+  const isClient = pageContext.user?.role === 'client';
+
+  const mainRoute = isClient ? ROUTES.MAIN : ROUTES.USERS;
 
   const isActive = (path: string) => pageContext.urlPathname === path;
 
@@ -22,9 +25,9 @@ const NavigationLayout = ({ children }: NavigationLayoutProps) => {
         <div className='container mx-auto px-4'>
           <nav className='flex justify-center items-center h-16'>
             <a
-              href={ROUTES.MAIN}
+              href={mainRoute}
               className={`flex flex-col items-center justify-center w-20 h-full transition-all duration-200 ${
-                isActive(ROUTES.MAIN)
+                isActive(mainRoute)
                   ? 'text-primary scale-110'
                   : 'text-base-content/70 hover:text-primary hover:scale-105'
               }`}

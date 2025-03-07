@@ -10,4 +10,5 @@ export type GetApiV1ApplicationParams = {
   page?: number;
   pageSize?: number;
   status?: ApplicationStatus[];
+  userId?: string;
 };
