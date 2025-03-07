@@ -5,5 +5,6 @@ import vikeReact from 'vike-react/config';
 export default {
   title: 'Wolf bank',
   description: 'Wolf bank',
-  extends: vikeReact
+  extends: vikeReact,
+  passToClient: ['user']
 } satisfies Config;

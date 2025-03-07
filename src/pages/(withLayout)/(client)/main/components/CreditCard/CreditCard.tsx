@@ -1,6 +1,10 @@
 import type { GetCreditResponse } from '@/generated/api/models';
 
-import { formatDecimal, formatTimestamp, translateAgreementStatus } from '@/utils/helpers';
+import {
+  formatTimestamp,
+  getStringFromDecimalValue,
+  translateAgreementStatus
+} from '@/utils/helpers';
 
 interface CreditCardProps {
   credit: GetCreditResponse;
@@ -15,8 +19,8 @@ export const CreditCard = ({ credit }: CreditCardProps) => (
           Статус:{' '}
           <span className='badge badge-primary'>{translateAgreementStatus(credit.status)}</span>
         </p>
-        <p>Основная сумма: {formatDecimal(credit.principalAmount)}</p>
-        <p>Процентная ставка: {formatDecimal(credit.interest)}</p>
+        <p>Основная сумма: {getStringFromDecimalValue(credit.principalAmount)}</p>
+        <p>Процентная ставка: {getStringFromDecimalValue(credit.interest)}</p>
         <p>Следующий платеж: {formatTimestamp(credit.nextPaymentDate)}</p>
       </div>
     </div>

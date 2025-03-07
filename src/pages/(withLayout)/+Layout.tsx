@@ -1,6 +1,6 @@
 import type { ReactNode } from 'react';
 
-import { HomeIcon } from 'lucide-react';
+import { CreditCardIcon, HomeIcon } from 'lucide-react';
 import { usePageContext } from 'vike-react/usePageContext';
 
 import { ROUTES } from '@/utils/constants';
@@ -10,9 +10,9 @@ interface NavigationLayoutProps {
 }
 
 const NavigationLayout = ({ children }: NavigationLayoutProps) => {
-  const { urlPathname } = usePageContext();
+  const pageContext = usePageContext();
 
-  const isActive = (path: string) => urlPathname === path;
+  const isActive = (path: string) => pageContext.urlPathname === path;
 
   return (
     <div className='min-h-screen pb-20 relative'>
@@ -31,6 +31,18 @@ const NavigationLayout = ({ children }: NavigationLayoutProps) => {
             >
               <HomeIcon className='w-6 h-6' />
               <span className='text-xs mt-1'>Главная</span>
+            </a>
+
+            <a
+              href={ROUTES.PRODUCTS}
+              className={`flex flex-col items-center justify-center w-20 h-full transition-all duration-200 ${
+                isActive(ROUTES.PRODUCTS)
+                  ? 'text-primary scale-110'
+                  : 'text-base-content/70 hover:text-primary hover:scale-105'
+              }`}
+            >
+              <CreditCardIcon className='w-6 h-6' />
+              <span className='text-xs mt-1'>Продукты</span>
             </a>
           </nav>
         </div>

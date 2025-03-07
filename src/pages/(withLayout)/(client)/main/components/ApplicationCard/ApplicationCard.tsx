@@ -1,6 +1,10 @@
 import type { ApplicationResponse } from '@/generated/api/models';
 
-import { formatDecimal, formatTimestamp, translateApplicationStatus } from '@/utils/helpers';
+import {
+  formatTimestamp,
+  getStringFromDecimalValue,
+  translateApplicationStatus
+} from '@/utils/helpers';
 
 interface ApplicationCardProps {
   application: ApplicationResponse;
@@ -16,8 +20,8 @@ export const ApplicationCard = ({ application }: ApplicationCardProps) => (
           <span className='badge badge-info'>{translateApplicationStatus(application.status)}</span>
         </p>
         <p>Дата создания: {formatTimestamp(application.createdAt)}</p>
-        <p>Сумма: {formatDecimal(application.amount)}</p>
-        <p>Процентная ставка: {formatDecimal(application.interest)}</p>
+        <p>Сумма: {getStringFromDecimalValue(application.amount)}</p>
+        <p>Процентная ставка: {getStringFromDecimalValue(application.interest)}</p>
         <p>Срок: {application.term} мес.</p>
       </div>
     </div>

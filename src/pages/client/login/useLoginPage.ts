@@ -12,7 +12,7 @@ export const useLoginPage = () => {
     // todo make request
 
     const user: PageContextUser = { role: 'client' };
-    setCookie('user', user);
+    setCookie('user', user, { path: '/' });
 
     if (pageContext.urlPathname === ROUTES.CLIENT_LOGIN) {
       await navigate(ROUTES.MAIN);

@@ -15,14 +15,14 @@ export interface AccountPageData {
 const data = async (_pageContext: PageContextServer): Promise<AccountPageData> => {
   const bankAccountId = _pageContext.routeParams.id;
   const bankAccount = await getApiV1BankAccountBankAccountId(bankAccountId);
-  // const transactionsHistory = await getApiV1BankAccountBankAccountIdHistory(bankAccountId, {
-  //   offset: 0,
-  //   limit: 100
-  // });
+  const transactionsHistory = await getApiV1BankAccountBankAccountIdHistory(bankAccountId, {
+    offset: 0,
+    limit: 100
+  });
 
   return {
     bankAccount,
-    transactionsHistory: []
+    transactionsHistory
   };
 };
 

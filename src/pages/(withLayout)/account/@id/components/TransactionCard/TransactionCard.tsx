@@ -1,8 +1,8 @@
 import type { Transaction } from '@/generated/api/models';
 
 import {
-  formatDecimal,
   formatTimestamp,
+  getStringFromDecimalValue,
   getTransactionClass,
   getTransactionLabel,
   getTransactionSign
@@ -18,7 +18,7 @@ export const TransactionCard = ({ transaction, currentAccountId }: TransactionCa
     <div className='flex justify-between items-center'>
       <div>
         <span className={getTransactionClass(transaction.type)}>
-          {getTransactionSign(transaction.type)} {formatDecimal(transaction.amount)} руб
+          {getTransactionSign(transaction.type)} {getStringFromDecimalValue(transaction.amount)} руб
         </span>
       </div>
       <span>{formatTimestamp(transaction.createdAt)}</span>

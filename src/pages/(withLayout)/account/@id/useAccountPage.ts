@@ -18,7 +18,7 @@ export const useAccountPage = () => {
   const { bankAccount, transactionsHistory } = useData<AccountPageData>();
   const pageContext = usePageContext();
 
-  const isClient = pageContext.user?.role === 'client';
+  const isClient = 'user' in pageContext && pageContext.user?.role === 'client';
   const isBankAccountClosable =
     isClient &&
     bankAccount.status !== BankAccountStatus.NUMBER_2 &&

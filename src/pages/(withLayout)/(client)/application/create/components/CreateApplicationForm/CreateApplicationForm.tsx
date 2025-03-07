@@ -1,4 +1,4 @@
-import { formatDecimal } from '@/utils/helpers';
+import { getStringFromDecimalValue } from '@/utils/helpers';
 
 import { useCreateApplicationForm } from './useCreateApplicationForm';
 
@@ -61,21 +61,21 @@ export const CreateApplicationForm = () => {
                     <div>
                       <p className='text-sm text-base-content/70'>Процентная ставка</p>
                       <p className='text-lg font-semibold'>
-                        {formatDecimal(state.availableProduct.interest)}%
+                        {getStringFromDecimalValue(state.availableProduct.interest)}%
                       </p>
                     </div>
 
                     <div>
                       <p className='text-sm text-base-content/70'>Сумма кредита</p>
                       <p className='text-lg font-semibold'>
-                        {formatDecimal(state.availableProduct.amount)} ₽
+                        {getStringFromDecimalValue(state.availableProduct.amount)} ₽
                       </p>
                     </div>
 
                     <div>
                       <p className='text-sm text-base-content/70'>Сумма уплаты процентов</p>
                       <p className='text-lg font-semibold'>
-                        {formatDecimal(state.availableProduct.originationAmount)} ₽
+                        {getStringFromDecimalValue(state.availableProduct.originationAmount)} ₽
                       </p>
                     </div>
 

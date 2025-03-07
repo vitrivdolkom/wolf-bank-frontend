@@ -2,9 +2,11 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { useIsMutating } from '@tanstack/react-query';
 import { useRef } from 'react';
 import { useForm } from 'react-hook-form';
+import { navigate } from 'vike/client/router';
 
 import { usePostApiV1Application, usePostApiV1ProductCalculate } from '@/generated/api/requests';
-import { formatDecimal, generateUUID, toDecimal, toDecimalValue } from '@/utils/helpers';
+import { ROUTES } from '@/utils/constants';
+import { generateUUID, getDecimalValue } from '@/utils/helpers';
 
 import { createApplicationSchema } from './createApplicationSchema';
 
@@ -27,30 +29,29 @@ export const useCreateApplicationForm = () => {
     mode: 'onSubmit'
   });
 
-  const onGetAvailableProductClick = () => {
-    console.log(
-      '#createApplicationForm.getValues("amount")',
-      toDecimalValue(+createApplicationForm.getValues('amount'))
-    );
-    postApiV1ProductCalculate.mutate({
+  const onGetAvailableProductClick = async () => {
+    await postApiV1ProductCalculate.mutateAsync({
       data: {
-        amount: toDecimalValue(+createApplicationForm.getValues('amount')),
+        amount: getDecimalValue(+createApplicationForm.getValues('amount')),
         term: +createApplicationForm.getValues('term')
       }
     });
+
+    idempotencyKey.current = generateUUID();
   };
 
   const onSubmit = createApplicationForm.handleSubmit(async (values) => {
-    console.log('#values', values);
     if (!postApiV1ProductCalculate.data) return;
 
-    postApiV1Application.mutate({
+    await postApiV1Application.mutateAsync({
       data: {
-        amount: toDecimal(+values.amount),
+        amount: getDecimalValue(+values.amount),
         term: +values.term,
-        interest: toDecimal(+formatDecimal(postApiV1ProductCalculate.data.interest!))
+        interest: postApiV1ProductCalculate.data.interest
       }
     });
+
+    await navigate(ROUTES.MAIN);
   });
 
   return {

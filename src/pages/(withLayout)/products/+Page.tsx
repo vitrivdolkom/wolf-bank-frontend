@@ -1,4 +1,4 @@
-import { formatDecimal } from '@/utils/helpers';
+import { getStringFromDecimalValue } from '@/utils/helpers';
 
 import { CreateProductPopup } from './components';
 import { useProductsPage } from './useProductsPage';
@@ -32,8 +32,8 @@ const ProductsPage = () => {
                 <div className='grid grid-cols-2 gap-2'>
                   <span className='text-base-content/70'>Процентная ставка</span>
                   <span className='text-right font-medium'>
-                    {product.minInterest && formatDecimal(product.minInterest)}% -
-                    {product.maxInterest && formatDecimal(product.maxInterest)}%
+                    {product.minInterest && getStringFromDecimalValue(product.minInterest)}% -
+                    {product.maxInterest && getStringFromDecimalValue(product.maxInterest)}%
                   </span>
                 </div>
 
@@ -47,16 +47,23 @@ const ProductsPage = () => {
                 <div className='grid grid-cols-2 gap-2'>
                   <span className='text-base-content/70'>Полная сумма кредита с процентами</span>
                   <span className='text-right font-medium'>
-                    {product.minPrincipalAmount && formatDecimal(product.minPrincipalAmount)} -
-                    {product.maxPrincipalAmount && formatDecimal(product.maxPrincipalAmount)} руб
+                    {product.minPrincipalAmount &&
+                      getStringFromDecimalValue(product.minPrincipalAmount)}{' '}
+                    -
+                    {product.maxPrincipalAmount &&
+                      getStringFromDecimalValue(product.maxPrincipalAmount)}{' '}
+                    руб
                   </span>
                 </div>
 
                 <div className='grid grid-cols-2 gap-2'>
                   <span className='text-base-content/70'>Сумма по процентам кредита</span>
                   <span className='text-right font-medium'>
-                    {product.minOriginationAmount && formatDecimal(product.minOriginationAmount)} -
-                    {product.maxOriginationAmount && formatDecimal(product.maxOriginationAmount)}{' '}
+                    {product.minOriginationAmount &&
+                      getStringFromDecimalValue(product.minOriginationAmount)}{' '}
+                    -
+                    {product.maxOriginationAmount &&
+                      getStringFromDecimalValue(product.maxOriginationAmount)}{' '}
                     руб
                   </span>
                 </div>

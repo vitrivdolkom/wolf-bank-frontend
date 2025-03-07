@@ -11,7 +11,6 @@ export const guard = (pageContext: PageContext) => {
   // if (!tokenValue) {
   //   throw render(ROUTES.CLIENT_LOGIN);
   // }
-
   if (!pageContext.user) {
     throw render(ROUTES.CLIENT_LOGIN);
   }

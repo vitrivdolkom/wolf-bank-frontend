@@ -1,6 +1,7 @@
 import { useIsMutating } from '@tanstack/react-query';
 import { useRef } from 'react';
 import { toast } from 'sonner';
+import { reload } from 'vike/client/router';
 
 import { usePostApiV1BankAccount } from '@/generated/api/requests';
 import { generateUUID } from '@/utils/helpers';
@@ -15,6 +16,7 @@ export const useMainPage = () => {
   const onOpenBankAccountClick = async () => {
     await postApiV1BankAccount.mutateAsync();
     toast.success('Счет открыт');
+    await reload();
   };
 
   return {

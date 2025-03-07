@@ -2,7 +2,7 @@ import { ExternalLinkIcon } from 'lucide-react';
 import { useData } from 'vike-react/useData';
 
 import { ROUTES } from '@/utils/constants';
-import { formatDecimal, formatTimestamp } from '@/utils/helpers';
+import { formatTimestamp, getStringFromDecimalValue } from '@/utils/helpers';
 
 import type { CreditPageData } from './+data';
 
@@ -36,9 +36,9 @@ const CreditPage = () => {
                   {getAgreementStatusLabel(credit.status)}
                 </span>
               </p>
-              <p>Сумма кредита: {formatDecimal(credit.principalAmount)} руб</p>
-              <p>Сумма с процентами: {formatDecimal(credit.principalAmount)} руб</p>
-              <p>Процентная ставка: {formatDecimal(credit.interest)} %</p>
+              <p>Сумма кредита: {getStringFromDecimalValue(credit.principalAmount)} руб</p>
+              <p>Сумма с процентами: {getStringFromDecimalValue(credit.principalAmount)} руб</p>
+              <p>Процентная ставка: {getStringFromDecimalValue(credit.interest)} %</p>
               <p>Срок: {credit.term} мес.</p>
               <p>Дата выдачи: {formatTimestamp(credit.disbursementDate)}</p>
               <p>Следующий платеж: {formatTimestamp(credit.nextPaymentDate)}</p>
@@ -62,7 +62,7 @@ const CreditPage = () => {
                 <span>{formatTimestamp(payment.paymentDate)}</span>
               </div>
               <div className='grid grid-cols-1 md:grid-cols-3 gap-4 mt-2 text-sm text-base-content/70'>
-                <p>Сумма платежа: {formatDecimal(payment.periodPayment)} руб</p>
+                <p>Сумма платежа: {getStringFromDecimalValue(payment.periodPayment)} руб</p>
               </div>
             </div>
           ))}

@@ -8,7 +8,7 @@ import {
   usePostApiV1PaymentBankAccountIdDeposit,
   usePostApiV1PaymentBankAccountIdWithdraw
 } from '@/generated/api/requests';
-import { formatDecimal, generateUUID } from '@/utils/helpers';
+import { generateUUID, getStringFromDecimalValue } from '@/utils/helpers';
 
 interface UseBankAccountActionsParams {
   bankAccount: BankAccountDto;
@@ -29,8 +29,6 @@ export const useBankAccountActions = ({ bankAccount }: UseBankAccountActionsPara
   });
 
   const onDeposit = async () => {
-    // const decimalValue = toDecimalValue(+depositAmount);
-
     await postApiV1PaymentBankAccountIdDeposit.mutateAsync({
       bankAccountId: bankAccount.bankAccountId!,
       data: { amount: +depositAmount }
@@ -42,7 +40,10 @@ export const useBankAccountActions = ({ bankAccount }: UseBankAccountActionsPara
   };
 
   const onWithdraw = async () => {
-    // const decimalValue = toDecimalValue(+withdrawAmount);
+    if (+withdrawAmount > +getStringFromDecimalValue(bankAccount.balance)) {
+      toast.error('Сумма снятия превышает баланс счета');
+      return;
+    }
 
     await postApiV1PaymentBankAccountIdWithdraw.mutateAsync({
       bankAccountId: bankAccount.bankAccountId!,
@@ -54,7 +55,9 @@ export const useBankAccountActions = ({ bankAccount }: UseBankAccountActionsPara
     await reload();
   };
 
-  const maxWithdrawAmount = Number(formatDecimal(bankAccount.balance).replace(/[^\d.-]/g, ''));
+  const maxWithdrawAmount = Number(
+    getStringFromDecimalValue(bankAccount.balance).replace(/[^\d.-]/g, '')
+  );
 
   return {
     state: {

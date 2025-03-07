@@ -7,6 +7,9 @@
     {
       "name": "WolfBankGateway",
       "path": "../WolfBankGateway"
+    },
+    {
+      "path": "../product-engine"
     }
   ],
   "settings": {}

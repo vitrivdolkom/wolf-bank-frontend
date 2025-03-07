@@ -6,8 +6,6 @@
  */
 
 export interface DecimalValue {
+  unscaled?: number;
   scale?: number;
-  precision?: number;
-  /** @nullable */
-  value?: number[] | null;
 }

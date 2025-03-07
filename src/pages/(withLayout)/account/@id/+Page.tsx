@@ -1,8 +1,8 @@
 import { ExternalLinkIcon } from 'lucide-react';
 
-import { BankAccountType } from '@/generated/api/models';
+import { BankAccountStatus, BankAccountType } from '@/generated/api/models';
 import { ROUTES } from '@/utils/constants';
-import { formatDecimal } from '@/utils/helpers';
+import { getStringFromDecimalValue } from '@/utils/helpers';
 
 import {
   BankAccountActions,
@@ -22,6 +22,7 @@ const AccountPage = () => {
           {data.bankAccount.type === BankAccountType.NUMBER_0
             ? 'Кредитный счет'
             : 'Банковский счет'}
+          {data.bankAccount.status === BankAccountStatus.NUMBER_2 && '(Закрыт)'}
         </h1>
         {data.bankAccount.type === BankAccountType.NUMBER_0 && (
           <a
@@ -35,7 +36,7 @@ const AccountPage = () => {
       </div>
 
       <h2 className='text-xl font-bold text-center mt-6 mb-2'>
-        Баланс - {formatDecimal(data.bankAccount.balance)} руб
+        Баланс - {getStringFromDecimalValue(data.bankAccount.balance)} руб
       </h2>
 
       {data.isClient && <BankAccountActions bankAccount={data.bankAccount} />}

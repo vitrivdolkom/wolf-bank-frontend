@@ -2,8 +2,8 @@ import type { BankAccountDto } from '@/generated/api/models';
 
 import { ROUTES } from '@/utils/constants';
 import {
-  formatDecimal,
   formatTimestamp,
+  getStringFromDecimalValue,
   translateBankAccountStatus,
   translateBankAccountType
 } from '@/utils/helpers';
@@ -32,7 +32,7 @@ export const BankAccountCard = ({ bankAccount, index }: BankAccountCardProps) =>
             {translateBankAccountStatus(bankAccount.status)}
           </span>
         </p>
-        <p>Баланс: {formatDecimal(bankAccount.balance)}</p>
+        <p>Баланс: {getStringFromDecimalValue(bankAccount.balance)}</p>
         <p>Дата создания: {formatTimestamp(bankAccount.createdAt)}</p>
       </div>
     </div>

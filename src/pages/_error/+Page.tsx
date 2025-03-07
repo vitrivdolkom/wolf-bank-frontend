@@ -1,9 +1,9 @@
 import { usePageContext } from 'vike-react/usePageContext';
 
 const ErrorPage = () => {
-  const { is404 } = usePageContext();
+  const pageContext = usePageContext();
 
-  if (is404) {
+  if (pageContext.is404) {
     return (
       <>
         <h1>404 Page Not Found</h1>

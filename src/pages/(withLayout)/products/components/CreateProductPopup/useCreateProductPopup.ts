@@ -4,7 +4,7 @@ import { useRef } from 'react';
 import { useForm } from 'react-hook-form';
 
 import { usePostApiV1Product } from '@/generated/api/requests';
-import { generateUUID, toDecimalValue } from '@/utils/helpers';
+import { generateUUID, getDecimalValue } from '@/utils/helpers';
 
 import type { CreateProductSchema } from './createProductSchema';
 
@@ -28,14 +28,14 @@ export const useCreateProductPopup = () => {
     postApiV1Product.mutate({
       data: {
         code: values.productCode,
-        minInterest: toDecimalValue(+values.minInterest),
-        maxInterest: toDecimalValue(+values.maxInterest),
+        minInterest: getDecimalValue(+values.minInterest),
+        maxInterest: getDecimalValue(+values.maxInterest),
         minTerm: +values.minTerm,
         maxTerm: +values.maxTerm,
-        minPrincipalAmount: toDecimalValue(+values.minPrincipalAmount),
-        maxPrincipalAmount: toDecimalValue(+values.maxPrincipalAmount),
-        minOriginationAmount: toDecimalValue(+values.minOriginationAmount),
-        maxOriginationAmount: toDecimalValue(+values.maxOriginationAmount)
+        minPrincipalAmount: getDecimalValue(+values.minPrincipalAmount),
+        maxPrincipalAmount: getDecimalValue(+values.maxPrincipalAmount),
+        minOriginationAmount: getDecimalValue(+values.minOriginationAmount),
+        maxOriginationAmount: getDecimalValue(+values.maxOriginationAmount)
       }
     });
   });
