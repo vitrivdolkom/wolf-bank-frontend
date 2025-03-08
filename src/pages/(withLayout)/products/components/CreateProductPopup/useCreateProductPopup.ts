@@ -2,6 +2,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { useIsMutating } from '@tanstack/react-query';
 import { useRef } from 'react';
 import { useForm } from 'react-hook-form';
+import { reload } from 'vike/client/router';
 
 import { usePostApiV1Product } from '@/generated/api/requests';
 import { generateUUID, getDecimalValue } from '@/utils/helpers';
@@ -10,7 +11,11 @@ import type { CreateProductSchema } from './createProductSchema';
 
 import { createProductSchema } from './createProductSchema';
 
-export const useCreateProductPopup = () => {
+interface UseCreateProductPopupParams {
+  onClose: () => void;
+}
+
+export const useCreateProductPopup = ({ onClose }: UseCreateProductPopupParams) => {
   const loading = !!useIsMutating();
   const createProductForm = useForm<CreateProductSchema>({
     resolver: yupResolver(createProductSchema),
@@ -23,9 +28,8 @@ export const useCreateProductPopup = () => {
     request: { headers: { 'Idempotency-Key': idempotencyKey.current } }
   });
 
-  const onSubmit = createProductForm.handleSubmit((values) => {
-    console.log('#values', values);
-    postApiV1Product.mutate({
+  const onSubmit = createProductForm.handleSubmit(async (values) => {
+    await postApiV1Product.mutateAsync({
       data: {
         code: values.productCode,
         minInterest: getDecimalValue(+values.minInterest),
@@ -38,6 +42,9 @@ export const useCreateProductPopup = () => {
         maxOriginationAmount: getDecimalValue(+values.maxOriginationAmount)
       }
     });
+
+    await reload();
+    onClose();
   });
 
   return {

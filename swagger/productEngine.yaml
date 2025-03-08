@@ -131,6 +131,96 @@ paths:
             text/json:
               schema:
                 $ref: '#/components/schemas/ListApplicationResponse'
+  /api/v1/Auth/login:
+    post:
+      tags:
+        - Auth
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LoginRequest'
+          text/json:
+            schema:
+              $ref: '#/components/schemas/LoginRequest'
+          application/*+json:
+            schema:
+              $ref: '#/components/schemas/LoginRequest'
+      responses:
+        '200':
+          description: OK
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/LoginResponse'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LoginResponse'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/LoginResponse'
+  /api/v1/Auth/register:
+    post:
+      tags:
+        - Auth
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RegisterRequest'
+          text/json:
+            schema:
+              $ref: '#/components/schemas/RegisterRequest'
+          application/*+json:
+            schema:
+              $ref: '#/components/schemas/RegisterRequest'
+      responses:
+        '200':
+          description: OK
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/RegisterResponse'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RegisterResponse'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/RegisterResponse'
+  /api/v1/Auth/logout:
+    post:
+      tags:
+        - Auth
+      responses:
+        '200':
+          description: OK
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/LogoutResponse'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LogoutResponse'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/LogoutResponse'
+  /api/v1/Auth/refresh:
+    get:
+      tags:
+        - Auth
+      responses:
+        '200':
+          description: OK
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/RevalidateResponse'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RevalidateResponse'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/RevalidateResponse'
   /api/v1/BankAccount:
     post:
       tags:
@@ -350,6 +440,34 @@ paths:
             text/json:
               schema:
                 $ref: '#/components/schemas/GetPaymentResponse'
+  /api/v1/Employee:
+    post:
+      tags:
+        - Employee
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateEmployeeRequest'
+          text/json:
+            schema:
+              $ref: '#/components/schemas/CreateEmployeeRequest'
+          application/*+json:
+            schema:
+              $ref: '#/components/schemas/CreateEmployeeRequest'
+      responses:
+        '200':
+          description: OK
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/CreateEmployeeResponse'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateEmployeeResponse'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/CreateEmployeeResponse'
   '/api/v1/Payment/{bank_account_id}/deposit':
     post:
       tags:
@@ -543,6 +661,88 @@ paths:
             text/json:
               schema:
                 $ref: '#/components/schemas/CalculateResponse'
+  '/api/v1/User/{userId}/ban':
+    post:
+      tags:
+        - User
+      parameters:
+        - name: userId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/BanUserResponse'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BanUserResponse'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/BanUserResponse'
+  /api/v1/User:
+    get:
+      tags:
+        - User
+      parameters:
+        - name: page
+          in: query
+          schema:
+            type: integer
+            format: int32
+        - name: pageSize
+          in: query
+          schema:
+            type: integer
+            format: int32
+        - name: search
+          in: query
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/ListUsersResponse'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListUsersResponse'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/ListUsersResponse'
+    post:
+      tags:
+        - User
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateUserRequest'
+          text/json:
+            schema:
+              $ref: '#/components/schemas/CreateUserRequest'
+          application/*+json:
+            schema:
+              $ref: '#/components/schemas/CreateUserRequest'
+      responses:
+        '200':
+          description: OK
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/CreateUserResponse'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateUserResponse'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/CreateUserResponse'
 components:
   schemas:
     AgreementStatus:
@@ -581,6 +781,13 @@ components:
         - 4
       type: integer
       format: int32
+    BanUserResponse:
+      type: object
+      properties:
+        message:
+          type: string
+          nullable: true
+      additionalProperties: false
     BankAccountDto:
       type: object
       properties:
@@ -656,6 +863,26 @@ components:
         interest:
           $ref: '#/components/schemas/Decimal'
       additionalProperties: false
+    CreateEmployeeRequest:
+      type: object
+      properties:
+        email:
+          type: string
+          nullable: true
+        password:
+          type: string
+          nullable: true
+      additionalProperties: false
+    CreateEmployeeResponse:
+      type: object
+      properties:
+        message:
+          type: string
+          nullable: true
+        userId:
+          type: string
+          nullable: true
+      additionalProperties: false
     CreateProductRequest:
       type: object
       properties:
@@ -686,6 +913,26 @@ components:
           $ref: '#/components/schemas/DecimalValue'
         maxOriginationAmount:
           $ref: '#/components/schemas/DecimalValue'
+      additionalProperties: false
+    CreateUserRequest:
+      type: object
+      properties:
+        email:
+          type: string
+          nullable: true
+        password:
+          type: string
+          nullable: true
+      additionalProperties: false
+    CreateUserResponse:
+      type: object
+      properties:
+        message:
+          type: string
+          nullable: true
+        userId:
+          type: string
+          nullable: true
       additionalProperties: false
     Decimal:
       type: object
@@ -785,6 +1032,46 @@ components:
           type: integer
           format: int32
       additionalProperties: false
+    ListUsersResponse:
+      type: object
+      properties:
+        users:
+          type: array
+          items:
+            $ref: '#/components/schemas/User'
+          nullable: true
+          readOnly: true
+        total:
+          type: integer
+          format: int32
+      additionalProperties: false
+    LoginRequest:
+      type: object
+      properties:
+        email:
+          type: string
+          nullable: true
+        password:
+          type: string
+          nullable: true
+      additionalProperties: false
+    LoginResponse:
+      type: object
+      properties:
+        token:
+          type: string
+          nullable: true
+        message:
+          type: string
+          nullable: true
+      additionalProperties: false
+    LogoutResponse:
+      type: object
+      properties:
+        message:
+          type: string
+          nullable: true
+      additionalProperties: false
     PayCreditResponse:
       type: object
       properties:
@@ -829,6 +1116,45 @@ components:
         maxOriginationAmount:
           $ref: '#/components/schemas/DecimalValue'
       additionalProperties: false
+    RegisterRequest:
+      type: object
+      properties:
+        email:
+          type: string
+          nullable: true
+        password:
+          type: string
+          nullable: true
+        role:
+          $ref: '#/components/schemas/Role'
+      additionalProperties: false
+    RegisterResponse:
+      type: object
+      properties:
+        message:
+          type: string
+          nullable: true
+        token:
+          type: string
+          nullable: true
+      additionalProperties: false
+    RevalidateResponse:
+      type: object
+      properties:
+        token:
+          type: string
+          nullable: true
+        message:
+          type: string
+          nullable: true
+      additionalProperties: false
+    Role:
+      enum:
+        - 0
+        - 1
+        - 2
+      type: integer
+      format: int32
     SchedulePayment:
       type: object
       properties:
@@ -907,6 +1233,18 @@ components:
           format: int32
         interest:
           $ref: '#/components/schemas/Decimal'
+      additionalProperties: false
+    User:
+      type: object
+      properties:
+        id:
+          type: string
+          nullable: true
+        email:
+          type: string
+          nullable: true
+        role:
+          $ref: '#/components/schemas/Role'
       additionalProperties: false
     WithdrawResponse:
       type: object

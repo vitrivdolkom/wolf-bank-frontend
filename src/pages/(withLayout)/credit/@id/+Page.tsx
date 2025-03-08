@@ -1,10 +1,12 @@
 import { ExternalLinkIcon } from 'lucide-react';
-import { useData } from 'vike-react/useData';
+import { usePageContext } from 'vike-react/usePageContext';
 
+import {
+  useGetApiV1CreditAgreementId,
+  useGetApiV1CreditAgreementIdPayments
+} from '@/generated/api/requests';
 import { ROUTES } from '@/utils/constants';
 import { formatTimestamp, getStringFromDecimalValue } from '@/utils/helpers';
-
-import type { CreditPageData } from './+data';
 
 import {
   getAgreementStatusClass,
@@ -14,7 +16,17 @@ import {
 } from './helpers/statuses';
 
 const CreditPage = () => {
-  const { credit, payments } = useData<CreditPageData>();
+  const pageContext = usePageContext();
+
+  const agreementId = pageContext.routeParams.id;
+
+  const getApiV1CreditAgreementId = useGetApiV1CreditAgreementId(agreementId);
+  const getApiV1CreditAgreementIdPayments = useGetApiV1CreditAgreementIdPayments(agreementId);
+
+  const payments = getApiV1CreditAgreementIdPayments.data?.schedulePayments ?? [];
+  const credit = getApiV1CreditAgreementId.data;
+
+  if (!credit) return null;
 
   return (
     <div className='container mx-auto px-4 py-8 max-w-3xl'>

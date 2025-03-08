@@ -1,32 +1,36 @@
 import { useRef } from 'react';
 import { toast } from 'sonner';
-import { useData } from 'vike-react/useData';
 import { usePageContext } from 'vike-react/usePageContext';
 import { reload } from 'vike/client/router';
 
 import { BankAccountStatus, BankAccountType } from '@/generated/api/models';
 import {
   useDeleteApiV1BankAccountBankAccountId,
+  useGetApiV1BankAccountBankAccountId,
+  useGetApiV1BankAccountBankAccountIdHistory,
   usePostApiV1PaymentAgreementIdCredit
 } from '@/generated/api/requests';
 import { IDS } from '@/utils/constants/ids';
 import { generateUUID } from '@/utils/helpers';
 
-import type { AccountPageData } from './+data';
-
 export const useAccountPage = () => {
-  const { bankAccount, transactionsHistory } = useData<AccountPageData>();
   const pageContext = usePageContext();
+  const bankAccountId = pageContext.routeParams.id;
+  const getApiV1BankAccountBankAccountId = useGetApiV1BankAccountBankAccountId(bankAccountId);
+  const getApiV1BankAccountBankAccountIdHistory =
+    useGetApiV1BankAccountBankAccountIdHistory(bankAccountId);
+  const transactionsHistory = getApiV1BankAccountBankAccountIdHistory.data ?? [];
+  const bankAccount = getApiV1BankAccountBankAccountId.data;
 
-  const isClient = 'user' in pageContext && pageContext.user?.role === 'client';
+  const isUser = pageContext.user?.role === 'user';
   const isBankAccountClosable =
-    isClient &&
-    bankAccount.status !== BankAccountStatus.NUMBER_2 &&
-    bankAccount.type === BankAccountType.NUMBER_1;
+    isUser &&
+    bankAccount?.status !== BankAccountStatus.NUMBER_2 &&
+    bankAccount?.type === BankAccountType.NUMBER_1;
   const isCreditAccountRepayable =
-    isClient &&
-    bankAccount.status !== BankAccountStatus.NUMBER_2 &&
-    bankAccount.type === BankAccountType.NUMBER_0;
+    isUser &&
+    bankAccount?.status !== BankAccountStatus.NUMBER_2 &&
+    bankAccount?.type === BankAccountType.NUMBER_0;
 
   const repayCreditIdempotencyKey = useRef(generateUUID());
 
@@ -51,7 +55,7 @@ export const useAccountPage = () => {
 
   const onCloseAccount = async () => {
     await deleteApiV1BankAccountBankAccountId.mutateAsync({
-      bankAccountId: bankAccount.bankAccountId!
+      bankAccountId: bankAccount!.bankAccountId!
     });
     toast.success('Счет закрыт');
     await reload();
@@ -59,7 +63,7 @@ export const useAccountPage = () => {
 
   const onRepayCredit = async () => {
     await postApiV1PaymentAgreementIdCredit.mutateAsync({
-      agreementId: bankAccount.agreementId!
+      agreementId: bankAccount!.agreementId!
     });
     repayCreditIdempotencyKey.current = generateUUID();
     toast.success('Деньги списаны');
@@ -70,7 +74,7 @@ export const useAccountPage = () => {
     data: {
       bankAccount,
       transactionsHistory,
-      isClient,
+      isUser,
       isBankAccountClosable,
       isCreditAccountRepayable
     },

@@ -15,6 +15,8 @@ import { useAccountPage } from './useAccountPage';
 const AccountPage = () => {
   const { data, functions } = useAccountPage();
 
+  if (!data.bankAccount) return null;
+
   return (
     <div className='container mx-auto px-4 py-8 max-w-3xl'>
       <div>
@@ -39,7 +41,7 @@ const AccountPage = () => {
         Баланс - {getStringFromDecimalValue(data.bankAccount.balance)} руб
       </h2>
 
-      {data.isClient && <BankAccountActions bankAccount={data.bankAccount} />}
+      {data.isUser && <BankAccountActions bankAccount={data.bankAccount} />}
       {data.isBankAccountClosable && (
         <>
           <div className='card bg-base-200'>

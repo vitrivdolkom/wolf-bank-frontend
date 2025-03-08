@@ -16,26 +16,6 @@ export const LoginForm = ({ onSuccessSubmit }: LoginFormProps) => {
       <form onSubmit={functions.onSubmit} {...form}>
         <div className='space-y-6'>
           <div>
-            <label className='text-sm font-medium' htmlFor='username'>
-              Имя пользователя
-            </label>
-            <input
-              id='username'
-              type='text'
-              {...form.register('username')}
-              className={`input input-bordered w-full mt-2 ${
-                form.formState.errors.username ? 'input-error' : ''
-              }`}
-              placeholder='Введите имя пользователя'
-            />
-            {form.formState.errors.username?.message && (
-              <span className='text-xs text-error mt-1 block'>
-                {form.formState.errors.username?.message}
-              </span>
-            )}
-          </div>
-
-          <div>
             <label className='text-sm font-medium' htmlFor='email'>
               Email
             </label>

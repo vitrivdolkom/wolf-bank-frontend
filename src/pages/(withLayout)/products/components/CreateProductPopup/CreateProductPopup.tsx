@@ -7,7 +7,7 @@ interface CreateProductPopupProps {
 }
 
 export const CreateProductPopup = ({ onClose }: CreateProductPopupProps) => {
-  const { state, functions, form } = useCreateProductPopup();
+  const { state, functions, form } = useCreateProductPopup({ onClose });
 
   return (
     <dialog className='modal' id={IDS.POPUPS.ADD_PRODUCT}>

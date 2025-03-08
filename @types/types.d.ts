@@ -3,7 +3,7 @@ interface ProcessEnv {
 }
 
 interface PageContextUser {
-  role: 'client' | 'staff';
+  role: 'admin' | 'employee' | 'user';
 }
 
 namespace Vike {

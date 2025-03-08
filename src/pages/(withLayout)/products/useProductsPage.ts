@@ -1,15 +1,15 @@
-import { useData } from 'vike-react/useData';
 import { usePageContext } from 'vike-react/usePageContext';
 
+import { useGetApiV1Product } from '@/generated/api/requests';
 import { IDS } from '@/utils/constants/ids';
 
-import type { ProductsPageData } from './+data';
-
 export const useProductsPage = () => {
-  const { products } = useData<ProductsPageData>();
   const pageContext = usePageContext();
 
-  const isStaff = pageContext.user?.role === 'staff';
+  const getApiV1Product = useGetApiV1Product({ limit: 10, offset: 0 });
+  const products = getApiV1Product.data ?? [];
+
+  const isStaff = pageContext.user?.role === 'employee';
 
   const onAddProductClick = () => {
     const popup = document.getElementById(IDS.POPUPS.ADD_PRODUCT) as HTMLDialogElement;
