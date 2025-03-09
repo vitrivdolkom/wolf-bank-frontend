@@ -7,10 +7,10 @@
 import type { DecimalValue } from './decimalValue';
 
 export interface CalculateResponse {
+  amount?: DecimalValue;
   /** @nullable */
   code?: string | null;
-  term?: number;
-  amount?: DecimalValue;
   interest?: DecimalValue;
   originationAmount?: DecimalValue;
+  term?: number;
 }

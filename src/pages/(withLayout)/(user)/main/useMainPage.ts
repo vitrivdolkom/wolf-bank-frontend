@@ -1,11 +1,13 @@
 import { useIsMutating } from '@tanstack/react-query';
 import { useRef } from 'react';
 import { toast } from 'sonner';
-import { reload } from 'vike/client/router';
 
-import type { ApplicationResponse, GetCreditResponse } from '@/generated/api/models';
-
-import { useGetApiV1BankAccount, usePostApiV1BankAccount } from '@/generated/api/requests';
+import {
+  useGetApiV1Application,
+  useGetApiV1BankAccount,
+  useGetApiV1Credit,
+  usePostApiV1BankAccount
+} from '@/generated/api/requests';
 import { generateUUID } from '@/utils/helpers';
 
 export const useMainPage = () => {
@@ -15,8 +17,8 @@ export const useMainPage = () => {
     request: { headers: { 'Idempotency-Key': idempotencyKey.current } }
   });
 
-  // const credits = await getApiV1Credit({ limit: 10, offset: 0 });
-  // const { applications } = await getApiV1Application({ page: 1, pageSize: 20 });
+  const getApiV1Credit = useGetApiV1Credit({ limit: 10, offset: 0 });
+  const getApiV1Application = useGetApiV1Application({ page: 1, pageSize: 20 });
   const getApiV1BankAccount = useGetApiV1BankAccount({ limit: 10, offset: 0 });
 
   const onOpenBankAccountClick = async () => {
@@ -28,8 +30,8 @@ export const useMainPage = () => {
   return {
     data: {
       bankAccounts: getApiV1BankAccount.data ?? [],
-      credits: [] as GetCreditResponse[],
-      applications: [] as ApplicationResponse[]
+      credits: getApiV1Credit.data ?? [],
+      applications: getApiV1Application.data?.applications ?? []
     },
     state: { loading },
     functions: { onOpenBankAccountClick }

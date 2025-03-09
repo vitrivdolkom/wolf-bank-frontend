@@ -5,11 +5,22 @@
  * OpenAPI spec version: 1.0
  */
 import type { Decimal } from './decimal';
+import type { ApplicationStatus } from './applicationStatus';
 
 export interface UpdateApplicationRequest {
   /** @nullable */
   id?: string | null;
-  amount?: Decimal;
+  /** @nullable */
+  userId?: string | null;
+  disbursementAmount?: Decimal;
+  originationAmount?: Decimal;
+  /** @nullable */
+  toBankAccountId?: string | null;
   term?: number;
   interest?: Decimal;
+  /** @nullable */
+  productCode?: string | null;
+  /** @nullable */
+  productVersion?: string | null;
+  status?: ApplicationStatus;
 }

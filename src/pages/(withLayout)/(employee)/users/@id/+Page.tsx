@@ -47,8 +47,8 @@ const UserPage = () => {
           </div>
           <div className='collapse-content'>
             <div className='space-y-4'>
-              {data.applications?.map((application) => (
-                <ApplicationCard key={application.id} application={application} />
+              {data.applications?.map((application, index) => (
+                <ApplicationCard key={application.id} index={index} application={application} />
               ))}
             </div>
           </div>

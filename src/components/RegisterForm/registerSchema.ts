@@ -1,10 +1,6 @@
 import * as yup from 'yup';
 
 export const registerSchema = yup.object().shape({
-  username: yup
-    .string()
-    .required('Имя пользователя обязательно')
-    .min(3, 'Имя пользователя должно быть не менее 3 символов'),
   email: yup.string().required('Email обязателен').email('Введите корректный email'),
   password: yup
     .string()

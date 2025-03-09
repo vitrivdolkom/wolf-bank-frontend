@@ -4,11 +4,14 @@ import { useRef } from 'react';
 import { useForm } from 'react-hook-form';
 import { navigate } from 'vike/client/router';
 
+import { ApplicationStatus } from '@/generated/api/models';
 import { usePostApiV1Application, usePostApiV1ProductCalculate } from '@/generated/api/requests';
 import { ROUTES } from '@/utils/constants';
 import { generateUUID, getDecimalValue } from '@/utils/helpers';
 
 import { createApplicationSchema } from './createApplicationSchema';
+
+const DEFAULT_PRODUCT_VERSION = '1.0';
 
 export const useCreateApplicationForm = () => {
   const loading = !!useIsMutating();
@@ -45,9 +48,15 @@ export const useCreateApplicationForm = () => {
 
     await postApiV1Application.mutateAsync({
       data: {
-        amount: getDecimalValue(+values.amount),
-        term: +values.term,
-        interest: postApiV1ProductCalculate.data.interest
+        productCode: postApiV1ProductCalculate.data.code,
+        productVersion: DEFAULT_PRODUCT_VERSION,
+        originationAmount: postApiV1ProductCalculate.data.originationAmount,
+        disbursementAmount: getDecimalValue(+values.amount),
+        // TODO: add to bank account id
+        toBankAccountId: values.bankAccountId,
+        status: ApplicationStatus.NUMBER_1,
+        interest: postApiV1ProductCalculate.data.interest,
+        term: postApiV1ProductCalculate.data.term
       }
     });
 

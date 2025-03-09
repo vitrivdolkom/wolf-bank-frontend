@@ -22,11 +22,13 @@ export const translateApplicationStatus = (status?: ApplicationStatus): string =
   if (status === undefined) return 'Н/Д';
 
   const translations: Record<ApplicationStatus, string> = {
-    [ApplicationStatus.NUMBER_0]: 'Новая',
-    [ApplicationStatus.NUMBER_1]: 'На рассмотрении',
-    [ApplicationStatus.NUMBER_2]: 'На рассмотрении',
-    [ApplicationStatus.NUMBER_3]: 'Одобрена',
-    [ApplicationStatus.NUMBER_4]: 'Отклонена'
+    [ApplicationStatus.NUMBER_0]: 'Черновик',
+    [ApplicationStatus.NUMBER_1]: 'Заявка создана',
+    [ApplicationStatus.NUMBER_2]: 'Договор создан',
+    [ApplicationStatus.NUMBER_3]: 'Скоринг',
+    [ApplicationStatus.NUMBER_4]: 'Проверка трудоустройства',
+    [ApplicationStatus.NUMBER_5]: 'Одобрена',
+    [ApplicationStatus.NUMBER_6]: 'Отклонена'
   };
 
   return translations[status] || 'Неизвестно';

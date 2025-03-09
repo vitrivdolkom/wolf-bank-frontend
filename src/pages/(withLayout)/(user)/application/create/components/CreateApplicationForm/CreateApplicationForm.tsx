@@ -1,5 +1,6 @@
 import { getStringFromDecimalValue } from '@/utils/helpers';
 
+import { BankAccountSelect } from '../BankAccountSelect/BankAccountSelect';
 import { useCreateApplicationForm } from './useCreateApplicationForm';
 
 export const CreateApplicationForm = () => {
@@ -51,6 +52,12 @@ export const CreateApplicationForm = () => {
                 </span>
               )}
             </div>
+
+            <BankAccountSelect
+              value={form.watch('bankAccountId')}
+              error={form.formState.errors.bankAccountId?.message}
+              onChange={(value) => form.setValue('bankAccountId', value)}
+            />
 
             {state.availableProduct && (
               <div className='card bg-base-200 shadow-md'>

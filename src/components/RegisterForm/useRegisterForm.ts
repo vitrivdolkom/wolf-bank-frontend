@@ -12,11 +12,6 @@ interface UseRegisterFormParams {
 export const useRegisterForm = ({ onSuccessSubmit }: UseRegisterFormParams) => {
   const registerForm = useForm({
     resolver: yupResolver(registerSchema),
-    defaultValues: {
-      email: 'example@ex.com',
-      username: 'example',
-      password: 'example'
-    },
     mode: 'onSubmit'
   });
 

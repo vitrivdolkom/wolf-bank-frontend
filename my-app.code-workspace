@@ -13,6 +13,9 @@
     },
     {
       "path": "../users-proj"
+    },
+    {
+      "path": "../credit-origination"
     }
   ],
   "settings": {}

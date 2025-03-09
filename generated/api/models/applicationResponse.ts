@@ -11,9 +11,18 @@ import type { Timestamp } from './timestamp';
 export interface ApplicationResponse {
   /** @nullable */
   id?: string | null;
-  amount?: Decimal;
+  /** @nullable */
+  userId?: string | null;
+  disbursementAmount?: Decimal;
+  originationAmount?: Decimal;
+  /** @nullable */
+  toBankAccountId?: string | null;
   term?: number;
   interest?: Decimal;
+  /** @nullable */
+  productCode?: string | null;
+  /** @nullable */
+  productVersion?: string | null;
   status?: ApplicationStatus;
   createdAt?: Timestamp;
   updatedAt?: Timestamp;

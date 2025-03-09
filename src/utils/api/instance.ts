@@ -2,6 +2,8 @@ import type { AxiosError, AxiosRequestConfig } from 'axios';
 
 import axios from 'axios';
 
+import { getApiV1AuthRefresh } from '@/generated/api/requests';
+
 import { LOCAL_STORAGE_KEYS } from '../constants';
 
 export const instance = axios.create({ baseURL: 'http://localhost:3000' });
@@ -16,7 +18,9 @@ instance.interceptors.request.use((config) => {
 });
 
 instance.interceptors.response.use(undefined, (error: AxiosError) => {
-  // if (error)
+  // if (error.status === 401 || error.status === 403) {
+  //   getApiV1AuthRefresh();
+  // }
 
   return Promise.reject(error);
 });

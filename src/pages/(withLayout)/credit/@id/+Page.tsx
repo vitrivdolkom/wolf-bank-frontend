@@ -32,10 +32,10 @@ const CreditPage = () => {
     <div className='container mx-auto px-4 py-8 max-w-3xl'>
       <h1 className='text-2xl font-bold'>Кредит {credit.agreementId}</h1>
       {/* // todo change to bankAccountId */}
-      <a href={ROUTES.ACCOUNT(credit.agreementId ?? '')} className='flex items-center gap-1'>
+      {/* <a href={ROUTES.ACCOUNT(credit.agreementId ?? '')} className='flex items-center gap-1'>
         <p className='text-lg underline text-blue-500'>Кредит счет {credit.agreementId}</p>
         <ExternalLinkIcon className='w-4 h-4 text-blue-500' />
-      </a>
+      </a> */}
 
       <div className='grid grid-cols-1 md:grid-cols-2 gap-6 mt-4'>
         <div className='card bg-base-200'>

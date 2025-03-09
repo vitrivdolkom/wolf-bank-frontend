@@ -775,13 +775,27 @@ components:
         id:
           type: string
           nullable: true
-        amount:
+        userId:
+          type: string
+          nullable: true
+        disbursementAmount:
           $ref: '#/components/schemas/Decimal'
+        originationAmount:
+          $ref: '#/components/schemas/Decimal'
+        toBankAccountId:
+          type: string
+          nullable: true
         term:
           type: integer
           format: int32
         interest:
           $ref: '#/components/schemas/Decimal'
+        productCode:
+          type: string
+          nullable: true
+        productVersion:
+          type: string
+          nullable: true
         status:
           $ref: '#/components/schemas/ApplicationStatus'
         createdAt:
@@ -796,6 +810,8 @@ components:
         - 2
         - 3
         - 4
+        - 5
+        - 6
       type: integer
       format: int32
     BanUserResponse:
@@ -872,13 +888,29 @@ components:
     CreateApplicationRequest:
       type: object
       properties:
-        amount:
+        userId:
+          type: string
+          nullable: true
+        disbursementAmount:
           $ref: '#/components/schemas/Decimal'
+        originationAmount:
+          $ref: '#/components/schemas/Decimal'
+        toBankAccountId:
+          type: string
+          nullable: true
         term:
           type: integer
           format: int32
         interest:
           $ref: '#/components/schemas/Decimal'
+        productCode:
+          type: string
+          nullable: true
+        productVersion:
+          type: string
+          nullable: true
+        status:
+          $ref: '#/components/schemas/ApplicationStatus'
       additionalProperties: false
     CreateEmployeeRequest:
       type: object
@@ -1258,13 +1290,29 @@ components:
         id:
           type: string
           nullable: true
-        amount:
+        userId:
+          type: string
+          nullable: true
+        disbursementAmount:
           $ref: '#/components/schemas/Decimal'
+        originationAmount:
+          $ref: '#/components/schemas/Decimal'
+        toBankAccountId:
+          type: string
+          nullable: true
         term:
           type: integer
           format: int32
         interest:
           $ref: '#/components/schemas/Decimal'
+        productCode:
+          type: string
+          nullable: true
+        productVersion:
+          type: string
+          nullable: true
+        status:
+          $ref: '#/components/schemas/ApplicationStatus'
       additionalProperties: false
     User:
       type: object
