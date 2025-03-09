@@ -15,8 +15,8 @@ const UserPage = () => {
           <div className='collapse-title text-xl font-medium'>Кредиты ({data.credits.length})</div>
           <div className='collapse-content collapse-open'>
             <div className='space-y-4 mt-4'>
-              {data.credits.map((credit) => (
-                <CreditCard key={credit.agreementId} credit={credit} />
+              {data.credits.map((credit, index) => (
+                <CreditCard key={credit.agreementId} credit={credit} index={index} />
               ))}
             </div>
           </div>

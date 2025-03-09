@@ -31,7 +31,7 @@ const AccountPage = () => {
             href={ROUTES.CREDIT(data.bankAccount.agreementId ?? '')}
             className='flex items-center gap-1'
           >
-            <p className='text-lg underline text-blue-500'>Кредит {data.bankAccount.agreementId}</p>
+            <p className='text-lg underline text-blue-500'>Кредит</p>
             <ExternalLinkIcon className='w-4 h-4 text-blue-500' />
           </a>
         )}
@@ -85,7 +85,7 @@ const AccountPage = () => {
           {data.transactionsHistory.map((transaction) => (
             <TransactionCard
               key={transaction.transactionId}
-              currentAccountId={data.bankAccount.bankAccountId!}
+              currentAccountId={data.bankAccount?.bankAccountId ?? ''}
               transaction={transaction}
             />
           ))}
