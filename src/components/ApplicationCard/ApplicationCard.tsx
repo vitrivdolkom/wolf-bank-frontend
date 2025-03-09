@@ -14,7 +14,7 @@ interface ApplicationCardProps {
 export const ApplicationCard = ({ application, index }: ApplicationCardProps) => (
   <div key={application.id} className='card bg-base-100 shadow-xl'>
     <div className='card-body'>
-      <h3 className='card-title'>Номер заявки: {index}</h3>
+      <h3 className='card-title'>Номер заявки: {index + 1}</h3>
       <div className='grid grid-cols-1 md:grid-cols-2 gap-4'>
         <p>
           Статус:{' '}

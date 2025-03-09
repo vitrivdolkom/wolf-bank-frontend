@@ -10,12 +10,12 @@ import { IDS } from '@/utils/constants/ids';
 export const useUsersPage = () => {
   const pageContext = usePageContext();
   const [userToBan, setUserToBan] = useState<User>();
-  // TODO fix search params
   const [searchFilter, setSearchFilter] = useState(pageContext.urlParsed.search.search ?? '');
   const getApiV1User = useGetApiV1User({ search: searchFilter, page: 1, pageSize: 100 });
   const postApiV1UserUserIdBan = usePostApiV1UserUserIdBan();
 
   const debouncedSearchFilterChange = useDebounceCallback((value: string) => {
+    // TODO fix search params
     pageContext.urlParsed.search = { search: value };
     getApiV1User.refetch();
   }, 500);

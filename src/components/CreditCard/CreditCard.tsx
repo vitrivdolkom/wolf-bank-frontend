@@ -1,5 +1,6 @@
 import type { GetCreditResponse } from '@/generated/api/models';
 
+import { ROUTES } from '@/utils/constants';
 import {
   formatTimestamp,
   getStringFromDecimalValue,
@@ -8,12 +9,15 @@ import {
 
 interface CreditCardProps {
   credit: GetCreditResponse;
+  index: number;
 }
 
-export const CreditCard = ({ credit }: CreditCardProps) => (
+export const CreditCard = ({ credit, index }: CreditCardProps) => (
   <div key={credit.agreementId} className='card bg-base-100 shadow-xl'>
     <div className='card-body'>
-      <h3 className='card-title'>Номер договора: {credit.agreementId || 'Н/Д'}</h3>
+      <a href={ROUTES.CREDIT(credit.agreementId ?? '')}>
+        <h3 className='card-title'>Договор номер {index + 1}</h3>
+      </a>
       <div className='grid grid-cols-1 md:grid-cols-2 gap-4'>
         <p>
           Статус:{' '}

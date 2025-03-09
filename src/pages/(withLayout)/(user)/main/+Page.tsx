@@ -20,8 +20,8 @@ const MainPage = () => {
               Оформить кредит
             </a>
             <div className='space-y-4 mt-4'>
-              {data.credits.map((credit) => (
-                <CreditCard key={credit.agreementId} credit={credit} />
+              {data.credits.map((credit, index) => (
+                <CreditCard key={credit.agreementId} credit={credit} index={index} />
               ))}
             </div>
           </div>

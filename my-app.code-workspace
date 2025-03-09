@@ -16,6 +16,9 @@
     },
     {
       "path": "../credit-origination"
+    },
+    {
+      "path": "../scoring"
     }
   ],
   "settings": {}

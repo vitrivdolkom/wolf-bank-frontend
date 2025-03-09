@@ -52,7 +52,6 @@ export const useCreateApplicationForm = () => {
         productVersion: DEFAULT_PRODUCT_VERSION,
         originationAmount: postApiV1ProductCalculate.data.originationAmount,
         disbursementAmount: getDecimalValue(+values.amount),
-        // TODO: add to bank account id
         toBankAccountId: values.bankAccountId,
         status: ApplicationStatus.NUMBER_1,
         interest: postApiV1ProductCalculate.data.interest,
