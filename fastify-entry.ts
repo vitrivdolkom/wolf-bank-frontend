@@ -14,17 +14,18 @@ const port = process.env.PORT ? Number.parseInt(process.env.PORT, 10) : 3000;
 const hmrPort = process.env.HMR_PORT ? Number.parseInt(process.env.HMR_PORT, 10) : 24678;
 
 const options = {
+  confKey: 'config',
   schema: {
     type: 'object',
-    required: ['PORT'],
+    required: ['API_URL'],
     properties: {
-      PORT: { type: 'string', default: 3000 }
+      API_URL: {
+        type: 'string'
+      }
     }
   },
-  dotenv: {
-    path: `${__dirname}/.env`,
-    debug: true
-  }
+  dotenv: true,
+  data: process.env
 };
 
 const startServer = async () => {
@@ -68,6 +69,6 @@ const startServer = async () => {
 /* eslint-disable-next-line antfu/no-top-level-await */
 const app = await startServer();
 
-app.listen({ port }, () => {
-  console.log(`Server listening on http://localhost:${port}`);
+app.listen({ port, host: '0.0.0.0' }, () => {
+  console.log(`Server listening on port: ${port}`);
 });
