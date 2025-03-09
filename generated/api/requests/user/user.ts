@@ -24,6 +24,7 @@ import type {
   CreateUserRequest,
   CreateUserResponse,
   GetApiV1UserParams,
+  GetProfileResponse,
   ListUsersResponse
 } from '../../models';
 
@@ -272,3 +273,98 @@ export const usePostApiV1User = <TError = unknown, TContext = unknown>(options?:
 
   return useMutation(mutationOptions);
 };
+export const getApiV1UserProfile = (
+  options?: SecondParameter<typeof getInstance>,
+  signal?: AbortSignal
+) => {
+  return getInstance<GetProfileResponse>(
+    { url: `/api/v1/User/profile`, method: 'GET', signal },
+    options
+  );
+};
+
+export const getGetApiV1UserProfileQueryKey = () => {
+  return [`/api/v1/User/profile`] as const;
+};
+
+export const getGetApiV1UserProfileQueryOptions = <
+  TData = Awaited<ReturnType<typeof getApiV1UserProfile>>,
+  TError = unknown
+>(options?: {
+  query?: Partial<UseQueryOptions<Awaited<ReturnType<typeof getApiV1UserProfile>>, TError, TData>>;
+  request?: SecondParameter<typeof getInstance>;
+}) => {
+  const { query: queryOptions, request: requestOptions } = options ?? {};
+
+  const queryKey = queryOptions?.queryKey ?? getGetApiV1UserProfileQueryKey();
+
+  const queryFn: QueryFunction<Awaited<ReturnType<typeof getApiV1UserProfile>>> = ({ signal }) =>
+    getApiV1UserProfile(requestOptions, signal);
+
+  return { queryKey, queryFn, ...queryOptions } as UseQueryOptions<
+    Awaited<ReturnType<typeof getApiV1UserProfile>>,
+    TError,
+    TData
+  > & { queryKey: DataTag<QueryKey, TData, TError> };
+};
+
+export type GetApiV1UserProfileQueryResult = NonNullable<
+  Awaited<ReturnType<typeof getApiV1UserProfile>>
+>;
+export type GetApiV1UserProfileQueryError = unknown;
+
+export function useGetApiV1UserProfile<
+  TData = Awaited<ReturnType<typeof getApiV1UserProfile>>,
+  TError = unknown
+>(options: {
+  query: Partial<UseQueryOptions<Awaited<ReturnType<typeof getApiV1UserProfile>>, TError, TData>> &
+    Pick<
+      DefinedInitialDataOptions<
+        Awaited<ReturnType<typeof getApiV1UserProfile>>,
+        TError,
+        Awaited<ReturnType<typeof getApiV1UserProfile>>
+      >,
+      'initialData'
+    >;
+  request?: SecondParameter<typeof getInstance>;
+}): DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+export function useGetApiV1UserProfile<
+  TData = Awaited<ReturnType<typeof getApiV1UserProfile>>,
+  TError = unknown
+>(options?: {
+  query?: Partial<UseQueryOptions<Awaited<ReturnType<typeof getApiV1UserProfile>>, TError, TData>> &
+    Pick<
+      UndefinedInitialDataOptions<
+        Awaited<ReturnType<typeof getApiV1UserProfile>>,
+        TError,
+        Awaited<ReturnType<typeof getApiV1UserProfile>>
+      >,
+      'initialData'
+    >;
+  request?: SecondParameter<typeof getInstance>;
+}): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+export function useGetApiV1UserProfile<
+  TData = Awaited<ReturnType<typeof getApiV1UserProfile>>,
+  TError = unknown
+>(options?: {
+  query?: Partial<UseQueryOptions<Awaited<ReturnType<typeof getApiV1UserProfile>>, TError, TData>>;
+  request?: SecondParameter<typeof getInstance>;
+}): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+
+export function useGetApiV1UserProfile<
+  TData = Awaited<ReturnType<typeof getApiV1UserProfile>>,
+  TError = unknown
+>(options?: {
+  query?: Partial<UseQueryOptions<Awaited<ReturnType<typeof getApiV1UserProfile>>, TError, TData>>;
+  request?: SecondParameter<typeof getInstance>;
+}): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+  const queryOptions = getGetApiV1UserProfileQueryOptions(options);
+
+  const query = useQuery(queryOptions) as UseQueryResult<TData, TError> & {
+    queryKey: DataTag<QueryKey, TData, TError>;
+  };
+
+  query.queryKey = queryOptions.queryKey;
+
+  return query;
+}

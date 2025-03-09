@@ -1,2 +1,7 @@
 @import 'tailwindcss';
 @plugin "daisyui";
+
+html {
+  margin-left: calc(100vw - 100%);
+  margin-right: 0;
+}

@@ -30,7 +30,6 @@ export const useCreateEmployeePopup = ({ onClose }: UseCreateEmployeePopupParams
       }
     });
 
-    await reload();
     onClose();
   });
 

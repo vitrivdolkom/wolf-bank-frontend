@@ -1,9 +1,9 @@
 import type { ReactNode } from 'react';
 
-import { CreditCardIcon, HomeIcon, LogOutIcon } from 'lucide-react';
+import { CreditCardIcon, HomeIcon, LogOutIcon, UserIcon } from 'lucide-react';
 import { useCookies } from 'react-cookie';
 import { usePageContext } from 'vike-react/usePageContext';
-import { reload } from 'vike/client/router';
+import { navigate, reload } from 'vike/client/router';
 
 import { usePostApiV1AuthLogout } from '@/generated/api/requests';
 import { LOCAL_STORAGE_KEYS, ROUTES } from '@/utils/constants';
@@ -28,7 +28,7 @@ const NavigationLayout = ({ children }: NavigationLayoutProps) => {
 
     localStorage.removeItem(LOCAL_STORAGE_KEYS.TOKEN);
     removeCookies('user', { path: '/' });
-    await reload();
+    navigate(ROUTES.ROOT);
   };
 
   return (
@@ -60,6 +60,18 @@ const NavigationLayout = ({ children }: NavigationLayoutProps) => {
             >
               <CreditCardIcon className='w-6 h-6' />
               <span className='text-xs mt-1'>Продукты</span>
+            </a>
+
+            <a
+              href={ROUTES.PROFILE}
+              className={`flex flex-col items-center justify-center w-20 h-full transition-all duration-200 ${
+                isActive(ROUTES.PROFILE)
+                  ? 'text-primary scale-110'
+                  : 'text-base-content/70 hover:text-primary hover:scale-105'
+              }`}
+            >
+              <UserIcon className='w-6 h-6' />
+              <span className='text-xs mt-1'>Профиль</span>
             </a>
 
             <button

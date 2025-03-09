@@ -13,8 +13,24 @@ const root = __dirname;
 const port = process.env.PORT ? Number.parseInt(process.env.PORT, 10) : 3000;
 const hmrPort = process.env.HMR_PORT ? Number.parseInt(process.env.HMR_PORT, 10) : 24678;
 
+const options = {
+  schema: {
+    type: 'object',
+    required: ['PORT'],
+    properties: {
+      PORT: { type: 'string', default: 3000 }
+    }
+  },
+  dotenv: {
+    path: `${__dirname}/.env`,
+    debug: true
+  }
+};
+
 const startServer = async () => {
-  const app = Fastify();
+  const app = Fastify({ logger: true });
+
+  app.register(await import('@fastify/env'), options);
 
   app.removeAllContentTypeParsers();
   app.addContentTypeParser('*', (_request, _payload, done) => {
@@ -40,7 +56,7 @@ const startServer = async () => {
   }
 
   app.register(httpProxy, {
-    upstream: 'http://localhost:5188',
+    upstream: process.env.API_URL,
     prefix: '/api',
     rewritePrefix: '/api'
   });

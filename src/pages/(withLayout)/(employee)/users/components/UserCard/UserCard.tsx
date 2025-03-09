@@ -2,9 +2,7 @@ import type { User } from '@/generated/api/models';
 
 import { Role } from '@/generated/api/models';
 import { ROUTES } from '@/utils/constants';
-import { translateUserRole } from '@/utils/helpers';
-
-import { getRoleBadgeClass } from './getRoleBadgeCard';
+import { getRoleBadgeClass, translateUserRole } from '@/utils/helpers';
 
 interface UserCardProps {
   user: User;

@@ -8,7 +8,7 @@ interface BanUserPopupProps {
 }
 
 export const BanUserPopup = ({ user, onBanUser }: BanUserPopupProps) => (
-  <dialog className='modal modal-open' id={IDS.POPUPS.BAN_USER}>
+  <dialog className='modal' id={IDS.POPUPS.BAN_USER}>
     <div className='modal-box'>
       <h3 className='font-bold text-lg'>Бан пользователя {user.email}</h3>
       <p className='py-4'>Вы уверены, что хотите забанить пользователя {user.email}?</p>

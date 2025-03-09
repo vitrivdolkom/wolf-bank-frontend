@@ -8,17 +8,23 @@ const UsersPage = () => {
     <div className='container mx-auto px-4 py-8'>
       <h1 className='text-3xl font-bold mb-8 text-center'>Пользователи</h1>
 
-      <button className='btn btn-primary mb-4' type='button' onClick={functions.onAddUserPopupOpen}>
-        Добавить пользователя
-      </button>
-      <CreateUserPopup onClose={functions.onAddUserPopupClose} />
-      <button
-        className='btn btn-primary mb-4'
-        type='button'
-        onClick={functions.onAddEmployeePopupOpen}
-      >
-        Добавить сотрудника
-      </button>
+      <div className='flex gap-2'>
+        <button
+          className='btn btn-primary mb-4'
+          type='button'
+          onClick={functions.onAddUserPopupOpen}
+        >
+          Добавить пользователя
+        </button>
+        <CreateUserPopup onClose={functions.onAddUserPopupClose} />
+        <button
+          className='btn btn-neutral mb-4'
+          type='button'
+          onClick={functions.onAddEmployeePopupOpen}
+        >
+          Добавить сотрудника
+        </button>
+      </div>
       <CreateEmployeePopup onClose={functions.onAddEmployeePopupClose} />
       <input
         className='input input-bordered w-full mb-2'

@@ -5,7 +5,7 @@ export const getRoleBadgeClass = (role?: Role) => {
     case Role.NUMBER_0:
       return 'badge-primary';
     case Role.NUMBER_1:
-      return 'badge-secondary';
+      return 'badge-neutral';
     case Role.NUMBER_2:
       return 'badge-accent';
     default:

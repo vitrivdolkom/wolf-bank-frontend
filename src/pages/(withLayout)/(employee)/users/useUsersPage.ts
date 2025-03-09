@@ -1,7 +1,6 @@
-import { useDebounceCallback } from '@siberiacancode/reactuse';
 import { useState } from 'react';
+import { useDebounceCallback } from 'usehooks-ts';
 import { usePageContext } from 'vike-react/usePageContext';
-import { reload } from 'vike/client/router';
 
 import type { User } from '@/generated/api/models';
 
@@ -31,6 +30,7 @@ export const useUsersPage = () => {
     if (popup) {
       popup.close();
     }
+    getApiV1User.refetch();
   };
 
   const onAddUserPopupOpen = () => {
@@ -45,6 +45,7 @@ export const useUsersPage = () => {
     if (popup) {
       popup.close();
     }
+    getApiV1User.refetch();
   };
 
   const onAddEmployeePopupOpen = () => {
@@ -66,7 +67,6 @@ export const useUsersPage = () => {
     if (!userToBan) return;
 
     await postApiV1UserUserIdBan.mutateAsync({ userId: userToBan.id! });
-    await reload();
     getApiV1User.refetch();
     setUserToBan(undefined);
   };

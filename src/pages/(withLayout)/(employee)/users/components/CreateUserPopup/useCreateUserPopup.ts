@@ -30,7 +30,6 @@ export const useCreateUserPopup = ({ onClose }: UseCreateUserPopupParams) => {
       }
     });
 
-    await reload();
     onClose();
   });
 

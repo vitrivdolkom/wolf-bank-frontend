@@ -31,6 +31,7 @@ export * from './getApiV1ProductParams';
 export * from './getApiV1UserParams';
 export * from './getCreditResponse';
 export * from './getPaymentResponse';
+export * from './getProfileResponse';
 export * from './listApplicationResponse';
 export * from './listUsersResponse';
 export * from './loginRequest';

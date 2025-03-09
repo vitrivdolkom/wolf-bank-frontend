@@ -22,7 +22,7 @@ export const useMainPage = () => {
   const onOpenBankAccountClick = async () => {
     await postApiV1BankAccount.mutateAsync();
     toast.success('Счет открыт');
-    await reload();
+    getApiV1BankAccount.refetch();
   };
 
   return {

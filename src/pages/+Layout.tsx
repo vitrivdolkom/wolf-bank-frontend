@@ -11,7 +11,7 @@ interface LayoutDefaultProps {
 }
 
 const LayoutDefault = ({ children }: LayoutDefaultProps) => (
-  <main>
+  <main className='min-h-screen relative'>
     <Toaster />
     <QueryClientProvider>{children}</QueryClientProvider>
   </main>

@@ -11,5 +11,6 @@ export const ROUTES = {
   PRODUCT: (id: string) => `/product/${id}`,
   CREATE_APPLICATION: '/application/create',
   USERS: '/users',
-  USER: (id: string) => `/users/${id}`
+  USER: (id: string) => `/users/${id}`,
+  PROFILE: '/profile'
 } as const;

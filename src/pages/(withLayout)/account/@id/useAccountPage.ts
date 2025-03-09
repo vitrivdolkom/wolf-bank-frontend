@@ -58,7 +58,7 @@ export const useAccountPage = () => {
       bankAccountId: bankAccount!.bankAccountId!
     });
     toast.success('Счет закрыт');
-    await reload();
+    getApiV1BankAccountBankAccountId.refetch();
   };
 
   const onRepayCredit = async () => {
@@ -67,7 +67,7 @@ export const useAccountPage = () => {
     });
     repayCreditIdempotencyKey.current = generateUUID();
     toast.success('Деньги списаны');
-    await reload();
+    getApiV1BankAccountBankAccountId.refetch();
   };
 
   return {

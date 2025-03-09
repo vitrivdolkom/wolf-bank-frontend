@@ -43,7 +43,6 @@ export const useCreateProductPopup = ({ onClose }: UseCreateProductPopupParams) 
       }
     });
 
-    await reload();
     onClose();
   });
 

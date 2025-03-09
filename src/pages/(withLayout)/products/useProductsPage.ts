@@ -23,6 +23,7 @@ export const useProductsPage = () => {
     if (popup) {
       popup.close();
     }
+    getApiV1Product.refetch();
   };
 
   return {
