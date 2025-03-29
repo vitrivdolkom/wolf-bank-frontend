@@ -17,6 +17,7 @@ export const useRegisterPage = () => {
     });
 
     const user: PageContextUser = {
+      id: '1',
       role: 'employee'
     };
     setCookie('user', user, { path: '/' });

@@ -16,6 +16,7 @@ export const useLoginPage = () => {
     const postApiV1AuthLoginResponse = await postApiV1AuthLogin.mutateAsync({ data: values });
 
     const user: PageContextUser = {
+      id: '1',
       role: 'employee'
     };
     setCookie('user', user, { path: '/' });

@@ -14,6 +14,7 @@ export const useRegisterPage = () => {
     const postApiV1AuthRegisterResponse = await postApiV1AuthRegister.mutateAsync({ data: values });
 
     const user: PageContextUser = {
+      id: '1',
       role: 'user'
     };
     setCookie('user', user, { path: '/' });

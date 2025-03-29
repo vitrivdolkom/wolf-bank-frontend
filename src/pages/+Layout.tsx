@@ -2,7 +2,9 @@ import type { ReactNode } from 'react';
 
 import { Toaster } from 'sonner';
 
+import { HiddenAccountsProvider } from '@/utils/contexts/hiddenAccounts';
 import { QueryClientProvider } from '@/utils/contexts/queryClient';
+import { ThemeProvider } from '@/utils/contexts/theme';
 
 import './tailwind.css';
 
@@ -13,7 +15,11 @@ interface LayoutDefaultProps {
 const LayoutDefault = ({ children }: LayoutDefaultProps) => (
   <main className='min-h-screen relative'>
     <Toaster />
-    <QueryClientProvider>{children}</QueryClientProvider>
+    <QueryClientProvider>
+      <ThemeProvider>
+        <HiddenAccountsProvider>{children}</HiddenAccountsProvider>
+      </ThemeProvider>
+    </QueryClientProvider>
   </main>
 );
 

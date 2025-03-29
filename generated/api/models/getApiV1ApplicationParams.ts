@@ -6,9 +6,9 @@
  */
 import type { ApplicationStatus } from './applicationStatus';
 
-export type GetApiV1ApplicationParams = {
+export interface GetApiV1ApplicationParams {
   page?: number;
   pageSize?: number;
   status?: ApplicationStatus[];
   userId?: string;
-};
+}

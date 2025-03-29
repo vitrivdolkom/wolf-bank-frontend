@@ -16,7 +16,7 @@ export const useLoginPage = () => {
   const onLogin = async (values: LoginRequest) => {
     const postApiV1AuthLoginResponse = await postApiV1AuthLogin.mutateAsync({ data: values });
 
-    const user: PageContextUser = { role: 'user' };
+    const user: PageContextUser = { id: '1', role: 'user' };
     setCookie('user', user, { path: '/' });
     localStorage.setItem(LOCAL_STORAGE_KEYS.TOKEN, postApiV1AuthLoginResponse.token ?? '');
 
