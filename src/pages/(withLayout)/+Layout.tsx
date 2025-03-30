@@ -1,6 +1,6 @@
 import type { ReactNode } from 'react';
 
-import { CreditCardIcon, HomeIcon, LogOutIcon, UserIcon } from 'lucide-react';
+import { ArrowRightLeftIcon, CreditCardIcon, HomeIcon, LogOutIcon, UserIcon } from 'lucide-react';
 import { useCookies } from 'react-cookie';
 import { usePageContext } from 'vike-react/usePageContext';
 import { navigate, reload } from 'vike/client/router';
@@ -60,6 +60,18 @@ const NavigationLayout = ({ children }: NavigationLayoutProps) => {
             >
               <CreditCardIcon className='w-6 h-6' />
               <span className='text-xs mt-1'>Продукты</span>
+            </a>
+
+            <a
+              href={ROUTES.TRANSFERS}
+              className={`flex flex-col items-center justify-center w-20 h-full transition-all duration-200 ${
+                isActive(ROUTES.TRANSFERS)
+                  ? 'text-primary scale-110'
+                  : 'text-base-content/70 hover:text-primary hover:scale-105'
+              }`}
+            >
+              <ArrowRightLeftIcon className='w-6 h-6' />
+              <span className='text-xs mt-1'>Переводы</span>
             </a>
 
             <a

@@ -1,6 +1,6 @@
+import { BankAccountSelect } from '@/components';
 import { getStringFromDecimalValue } from '@/utils/helpers';
 
-import { BankAccountSelect } from '../BankAccountSelect/BankAccountSelect';
 import { useCreateApplicationForm } from './useCreateApplicationForm';
 
 export const CreateApplicationForm = () => {
@@ -54,6 +54,7 @@ export const CreateApplicationForm = () => {
             </div>
 
             <BankAccountSelect
+              label='Счет для зачисления'
               value={form.watch('bankAccountId')}
               error={form.formState.errors.bankAccountId?.message}
               onChange={(value) => form.setValue('bankAccountId', value)}

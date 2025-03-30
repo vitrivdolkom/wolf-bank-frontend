@@ -12,5 +12,8 @@ export const ROUTES = {
   CREATE_APPLICATION: '/application/create',
   USERS: '/users',
   USER: (id: string) => `/users/${id}`,
-  PROFILE: '/profile'
+  PROFILE: '/profile',
+  TRANSFERS: '/transfers',
+  TRANSFERS_SELF: '/transfers/self',
+  TRANSFERS_EXTERNAL: '/transfers/external'
 } as const;
