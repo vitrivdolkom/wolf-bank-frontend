@@ -1,10 +1,9 @@
 import type { ReactNode } from 'react';
 
-import { useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { usePageContext } from 'vike-react/usePageContext';
 
 import { getHiddenAccounts } from '@/utils/api';
-import { useDidUpdate } from '@/utils/hooks';
 
 import type { HiddenAccountsContextValue } from './HiddenAccountsContext';
 
@@ -20,17 +19,22 @@ export const HiddenAccountsProvider = ({ children }: HiddenAccountsProviderProps
     HiddenAccountsContextValue['hiddenAccounts']
   >([]);
 
-  useDidUpdate(() => {
-    if (!pageContext.user) return;
+  const requestHiddenAccounts = async () => {
+    if (!pageContext.user?.id) return;
 
-    const requestHiddenAccounts = async () => {
-      const getHiddenAccountsResponse = await getHiddenAccounts({ userId: pageContext.user!.id });
+    const getHiddenAccountsResponse = await getHiddenAccounts({ userId: pageContext.user!.id });
 
-      setHiddenAccounts(getHiddenAccountsResponse.hiddenAccounts);
-    };
+    setHiddenAccounts(getHiddenAccountsResponse.hiddenAccounts);
+  };
 
+  useEffect(() => {
     requestHiddenAccounts();
   }, [pageContext.user?.id]);
 
-  return <HiddenAccountsContext value={{ hiddenAccounts }}>{children}</HiddenAccountsContext>;
+  const value = useMemo(
+    () => ({ hiddenAccounts, refetch: requestHiddenAccounts }),
+    [hiddenAccounts]
+  );
+
+  return <HiddenAccountsContext value={value}>{children}</HiddenAccountsContext>;
 };

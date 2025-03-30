@@ -32,18 +32,14 @@ const options = {
 };
 
 const startServer = async () => {
-  const app = Fastify({ logger: true });
+  const app = Fastify();
 
-  app.register(await import('@fastify/env'), options);
+  await app.register(await import('@fastify/env'), options);
+  const envs = app.getEnvs<ProcessEnv>();
+
   app.register(await import('@fastify/mongodb'), {
-    // url: process.env.MONGO_URL
-    url: 'mongodb://localhost:27017/wolf-bank'
+    url: envs.MONGO_URL
   });
-
-  // app.removeAllContentTypeParsers();
-  // app.addContentTypeParser('*', (_request, _payload, done) => {
-  //   done(null, '');
-  // });
 
   await app.register(await import('@fastify/middie'));
 
@@ -64,7 +60,7 @@ const startServer = async () => {
   }
 
   app.register(httpProxy, {
-    upstream: process.env.API_URL,
+    upstream: envs.API_URL,
     prefix: '/api',
     rewritePrefix: '/api'
   });
@@ -129,7 +125,9 @@ const startServer = async () => {
 
       const hiddenAccounts = await collection.find({ userId }).toArray();
 
-      reply.code(200).send(hiddenAccounts);
+      reply
+        .code(200)
+        .send({ hiddenAccounts: hiddenAccounts.map((hiddenAccount) => hiddenAccount.accountId) });
     } catch (error) {
       console.error(error);
 
@@ -147,12 +145,12 @@ const startServer = async () => {
 
       if (body.hide) {
         await collection.insertOne({
-          _id: body.accountId,
+          accountId: body.accountId,
           userId: body.userId
         });
       } else {
         await collection.deleteOne({
-          _id: body.accountId,
+          accountId: body.accountId,
           userId: body.userId
         });
       }

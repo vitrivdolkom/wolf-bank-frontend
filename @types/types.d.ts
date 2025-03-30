@@ -18,6 +18,7 @@ namespace Vike {
 namespace NodeJS {
   interface ProcessEnv {
     API_URL: string;
+    MONGO_URL: string;
     NODE_ENV: 'development' | 'production';
   }
 }

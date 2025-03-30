@@ -15,6 +15,8 @@ export const useBankAccountCard = (bankAccountId: string) => {
       hide: !isHiddenAccount,
       userId: pageContext.user!.id
     });
+
+    hiddenAccountsContext.refetch();
   };
 
   return { state: { isHiddenAccount }, functions: { onHideAccountClick } };

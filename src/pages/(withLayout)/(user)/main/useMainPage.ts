@@ -2,6 +2,7 @@ import { useIsMutating } from '@tanstack/react-query';
 import { useRef } from 'react';
 import { toast } from 'sonner';
 
+import { BankAccountStatus, BankAccountType } from '@/generated/api/models';
 import {
   useGetApiV1Application,
   useGetApiV1BankAccount,
@@ -29,7 +30,17 @@ export const useMainPage = () => {
 
   return {
     data: {
-      bankAccounts: getApiV1BankAccount.data ?? [],
+      bankAccounts: getApiV1BankAccount.data ?? [
+        // TODO remove
+        {
+          bankAccountId: '1',
+          agreementId: '1',
+          clientId: '1',
+          balance: { scale: 2, unscaledValue: 10000 },
+          type: BankAccountType.NUMBER_0,
+          status: BankAccountStatus.NUMBER_0
+        }
+      ],
       credits: getApiV1Credit.data ?? [],
       applications: getApiV1Application.data?.applications ?? []
     },
