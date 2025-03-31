@@ -16,7 +16,13 @@ import type {
   UseQueryResult
 } from '@tanstack/react-query';
 
-import type { GetApiV1CreditParams, GetCreditResponse, GetPaymentResponse } from '../../models';
+import type {
+  GetApiV1CreditParams,
+  GetApiV1CreditRateParams,
+  GetCreditRateResponse,
+  GetCreditResponse,
+  GetPaymentResponse
+} from '../../models';
 
 import { getInstance } from '../../../../src/utils/api/instance';
 
@@ -369,6 +375,120 @@ export function useGetApiV1CreditAgreementIdPayments<
   }
 ): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
   const queryOptions = getGetApiV1CreditAgreementIdPaymentsQueryOptions(agreementId, options);
+
+  const query = useQuery(queryOptions) as UseQueryResult<TData, TError> & {
+    queryKey: DataTag<QueryKey, TData, TError>;
+  };
+
+  query.queryKey = queryOptions.queryKey;
+
+  return query;
+}
+
+export const getApiV1CreditRate = (
+  params?: GetApiV1CreditRateParams,
+  options?: SecondParameter<typeof getInstance>,
+  signal?: AbortSignal
+) => {
+  return getInstance<GetCreditRateResponse>(
+    { url: `/api/v1/Credit/rate`, method: 'GET', params, signal },
+    options
+  );
+};
+
+export const getGetApiV1CreditRateQueryKey = (params?: GetApiV1CreditRateParams) => {
+  return [`/api/v1/Credit/rate`, ...(params ? [params] : [])] as const;
+};
+
+export const getGetApiV1CreditRateQueryOptions = <
+  TData = Awaited<ReturnType<typeof getApiV1CreditRate>>,
+  TError = unknown
+>(
+  params?: GetApiV1CreditRateParams,
+  options?: {
+    query?: Partial<UseQueryOptions<Awaited<ReturnType<typeof getApiV1CreditRate>>, TError, TData>>;
+    request?: SecondParameter<typeof getInstance>;
+  }
+) => {
+  const { query: queryOptions, request: requestOptions } = options ?? {};
+
+  const queryKey = queryOptions?.queryKey ?? getGetApiV1CreditRateQueryKey(params);
+
+  const queryFn: QueryFunction<Awaited<ReturnType<typeof getApiV1CreditRate>>> = ({ signal }) =>
+    getApiV1CreditRate(params, requestOptions, signal);
+
+  return { queryKey, queryFn, ...queryOptions } as UseQueryOptions<
+    Awaited<ReturnType<typeof getApiV1CreditRate>>,
+    TError,
+    TData
+  > & { queryKey: DataTag<QueryKey, TData, TError> };
+};
+
+export type GetApiV1CreditRateQueryResult = NonNullable<
+  Awaited<ReturnType<typeof getApiV1CreditRate>>
+>;
+export type GetApiV1CreditRateQueryError = unknown;
+
+export function useGetApiV1CreditRate<
+  TData = Awaited<ReturnType<typeof getApiV1CreditRate>>,
+  TError = unknown
+>(
+  params: undefined | GetApiV1CreditRateParams,
+  options: {
+    query: Partial<UseQueryOptions<Awaited<ReturnType<typeof getApiV1CreditRate>>, TError, TData>> &
+      Pick<
+        DefinedInitialDataOptions<
+          Awaited<ReturnType<typeof getApiV1CreditRate>>,
+          TError,
+          Awaited<ReturnType<typeof getApiV1CreditRate>>
+        >,
+        'initialData'
+      >;
+    request?: SecondParameter<typeof getInstance>;
+  }
+): DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+export function useGetApiV1CreditRate<
+  TData = Awaited<ReturnType<typeof getApiV1CreditRate>>,
+  TError = unknown
+>(
+  params?: GetApiV1CreditRateParams,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<Awaited<ReturnType<typeof getApiV1CreditRate>>, TError, TData>
+    > &
+      Pick<
+        UndefinedInitialDataOptions<
+          Awaited<ReturnType<typeof getApiV1CreditRate>>,
+          TError,
+          Awaited<ReturnType<typeof getApiV1CreditRate>>
+        >,
+        'initialData'
+      >;
+    request?: SecondParameter<typeof getInstance>;
+  }
+): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+export function useGetApiV1CreditRate<
+  TData = Awaited<ReturnType<typeof getApiV1CreditRate>>,
+  TError = unknown
+>(
+  params?: GetApiV1CreditRateParams,
+  options?: {
+    query?: Partial<UseQueryOptions<Awaited<ReturnType<typeof getApiV1CreditRate>>, TError, TData>>;
+    request?: SecondParameter<typeof getInstance>;
+  }
+): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+
+export function useGetApiV1CreditRate<
+  TData = Awaited<ReturnType<typeof getApiV1CreditRate>>,
+  TError = unknown
+>(
+  params?: GetApiV1CreditRateParams,
+  options?: {
+    query?: Partial<UseQueryOptions<Awaited<ReturnType<typeof getApiV1CreditRate>>, TError, TData>>;
+    request?: SecondParameter<typeof getInstance>;
+  }
+): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+  const queryOptions = getGetApiV1CreditRateQueryOptions(params, options);
 
   const query = useQuery(queryOptions) as UseQueryResult<TData, TError> & {
     queryKey: DataTag<QueryKey, TData, TError>;

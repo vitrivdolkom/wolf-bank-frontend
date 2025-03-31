@@ -1,8 +1,10 @@
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useRef } from 'react';
 import { useForm } from 'react-hook-form';
+import { toast } from 'sonner';
 import { navigate } from 'vike/client/router';
 
+import { usePostApiV1PaymentBankAccountIdWithdraw } from '@/generated/api/requests';
 import { ROUTES } from '@/utils/constants';
 import { generateUUID } from '@/utils/helpers';
 
@@ -19,12 +21,19 @@ export const useTransfersPage = () => {
     }
   });
 
-  const idempotencyKey = useRef(generateUUID());
+  const withdrawIdempotencyKey = useRef(generateUUID());
+  const postApiV1PaymentBankAccountIdWithdraw = usePostApiV1PaymentBankAccountIdWithdraw({
+    request: { headers: { 'Idempotency-Key': withdrawIdempotencyKey.current } }
+  });
 
   const onSubmit = sendTransferForm.handleSubmit(async (values) => {
-    console.log('#values', values);
-    console.log('#idempotencyKey', idempotencyKey);
-    // TODO add request
+    await postApiV1PaymentBankAccountIdWithdraw.mutateAsync({
+      bankAccountId: values.fromAccount,
+      data: { amount: +values.amount, toBankAccountId: values.toAccount }
+    });
+
+    withdrawIdempotencyKey.current = generateUUID();
+    toast.success('Перевод прошел успешно');
     await navigate(ROUTES.MAIN);
   });
 

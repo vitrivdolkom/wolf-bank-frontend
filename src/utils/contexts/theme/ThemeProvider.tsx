@@ -2,9 +2,7 @@ import type { ReactNode } from 'react';
 
 import { useLayoutEffect, useMemo, useState } from 'react';
 
-import type { GetProfileResponse } from '@/generated/api/models';
-
-import { Role } from '@/generated/api/models';
+import { useGetApiV1UserProfile } from '@/generated/api/requests';
 import { getTheme, postTheme } from '@/utils/api';
 import { LOCAL_STORAGE_KEYS } from '@/utils/constants';
 
@@ -15,15 +13,7 @@ interface ThemeProviderProps {
 }
 
 export const ThemeProvider = ({ children }: ThemeProviderProps) => {
-  // TODO use getApiV1UserProfile
-  // const getApiV1UserProfile = useGetApiV1UserProfile();
-
-  const profile: GetProfileResponse = {
-    id: '1',
-    email: 'email',
-    role: Role.NUMBER_0,
-    username: 'test'
-  };
+  const getApiV1UserProfile = useGetApiV1UserProfile();
 
   const [theme, setTheme] = useState<Theme>(
     (localStorage.getItem(LOCAL_STORAGE_KEYS.THEME) ?? 'light') as Theme
@@ -36,25 +26,28 @@ export const ThemeProvider = ({ children }: ThemeProviderProps) => {
   };
 
   const requestTheme = async () => {
-    if (!profile.id) return;
+    if (!getApiV1UserProfile.data?.id) return;
 
-    const getThemeResponse = await getTheme({ userId: profile.id });
+    const getThemeResponse = await getTheme({ userId: getApiV1UserProfile.data.id });
     updateTheme(getThemeResponse.theme);
   };
 
   useLayoutEffect(() => {
     requestTheme();
-  }, [profile.id]);
+  }, [getApiV1UserProfile.data]);
 
   const toggleTheme = async () => {
-    if (!profile.id) return;
+    if (!getApiV1UserProfile.data?.id) return;
     const newTheme = theme === 'light' ? 'dark' : 'light';
 
-    await postTheme({ theme: newTheme, userId: profile.id });
+    await postTheme({ theme: newTheme, userId: getApiV1UserProfile.data.id });
     updateTheme(newTheme);
   };
 
-  const value = useMemo(() => ({ value: theme, toggle: toggleTheme }), [theme]);
+  const value = useMemo(
+    () => ({ value: theme, toggle: toggleTheme }),
+    [theme, getApiV1UserProfile.data]
+  );
 
   return <ThemeContext value={value}>{children}</ThemeContext>;
 };

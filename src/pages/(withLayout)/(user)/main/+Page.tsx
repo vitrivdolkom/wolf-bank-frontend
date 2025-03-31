@@ -1,15 +1,20 @@
-import { ApplicationCard, BankAccountCard, CreditCard } from '@/components';
+import { usePageContext } from 'vike-react/usePageContext';
+
+import { ApplicationCard, BankAccountCard, CreditCard, CreditRate } from '@/components';
 import { ROUTES } from '@/utils/constants';
 
 import { useMainPage } from './useMainPage';
 
 const MainPage = () => {
+  const pageContext = usePageContext();
   const { data, functions } = useMainPage();
 
   return (
     <div className='container mx-auto px-4 py-8'>
       <h1 className='text-3xl font-bold mb-8 text-center'>Финансовая Панель</h1>
-      <div className='flex gap-4 justify-center mb-8'></div>
+      <div className='my-4'>
+        <CreditRate userId={pageContext.user!.id} />
+      </div>
 
       <div className='mb-6'>
         <div className='collapse collapse-arrow bg-base-200'>

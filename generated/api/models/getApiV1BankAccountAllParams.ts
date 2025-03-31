@@ -5,8 +5,8 @@
  * OpenAPI spec version: 1.0
  */
 
-export interface PaymentModel {
-  amount?: number;
-  /** @nullable */
-  toBankAccountId?: string | null;
-}
+export type GetApiV1BankAccountAllParams = {
+  offset?: number;
+  limit?: number;
+  userId?: string;
+};

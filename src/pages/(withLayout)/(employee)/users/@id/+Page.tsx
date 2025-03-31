@@ -1,4 +1,4 @@
-import { ApplicationCard, BankAccountCard, CreditCard } from '@/components';
+import { ApplicationCard, BankAccountCard, CreditCard, CreditRate } from '@/components';
 
 import { useUserPage } from './useUserPage';
 
@@ -8,6 +8,10 @@ const UserPage = () => {
   return (
     <div className='container mx-auto px-4 py-8'>
       <h1 className='text-3xl font-bold mb-8 text-center'>Информация о пользователе</h1>
+
+      <div className='my-4'>
+        <CreditRate userId={data.userId} />
+      </div>
 
       <div className='mb-6'>
         <div className='collapse collapse-arrow bg-base-200'>

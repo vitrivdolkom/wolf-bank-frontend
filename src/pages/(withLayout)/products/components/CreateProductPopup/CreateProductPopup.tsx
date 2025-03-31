@@ -51,6 +51,7 @@ export const CreateProductPopup = ({ onClose }: CreateProductPopupProps) => {
                   </label>
                   <input
                     id='minInterest'
+                    min='0'
                     step='0.01'
                     type='number'
                     {...form.register('minInterest')}
@@ -72,6 +73,7 @@ export const CreateProductPopup = ({ onClose }: CreateProductPopupProps) => {
                   </label>
                   <input
                     id='maxInterest'
+                    min='0'
                     step='0.01'
                     type='number'
                     {...form.register('maxInterest')}
@@ -95,6 +97,7 @@ export const CreateProductPopup = ({ onClose }: CreateProductPopupProps) => {
                   </label>
                   <input
                     id='minTerm'
+                    min='0'
                     type='number'
                     {...form.register('minTerm')}
                     className={`input input-bordered w-full mt-2 ${
@@ -115,6 +118,7 @@ export const CreateProductPopup = ({ onClose }: CreateProductPopupProps) => {
                   </label>
                   <input
                     id='maxTerm'
+                    min='0'
                     type='number'
                     {...form.register('maxTerm')}
                     className={`input input-bordered w-full mt-2 ${
@@ -137,6 +141,7 @@ export const CreateProductPopup = ({ onClose }: CreateProductPopupProps) => {
                   </label>
                   <input
                     id='minPrincipalAmount'
+                    min='0'
                     step='1000'
                     type='number'
                     {...form.register('minPrincipalAmount')}
@@ -158,6 +163,7 @@ export const CreateProductPopup = ({ onClose }: CreateProductPopupProps) => {
                   </label>
                   <input
                     id='maxPrincipalAmount'
+                    min='0'
                     step='1000'
                     type='number'
                     {...form.register('maxPrincipalAmount')}
@@ -181,6 +187,7 @@ export const CreateProductPopup = ({ onClose }: CreateProductPopupProps) => {
                   </label>
                   <input
                     id='minOriginationAmount'
+                    min='0'
                     step='1000'
                     type='number'
                     {...form.register('minOriginationAmount')}
@@ -202,6 +209,7 @@ export const CreateProductPopup = ({ onClose }: CreateProductPopupProps) => {
                   </label>
                   <input
                     id='maxOriginationAmount'
+                    min='0'
                     step='1000'
                     type='number'
                     {...form.register('maxOriginationAmount')}

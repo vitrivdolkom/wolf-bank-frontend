@@ -29,7 +29,7 @@ export const BankAccountSelect = ({ value, onChange, error, label }: BankAccount
         <option value=''>Выберите счет</option>
         {regularAccounts.map((account, index) => (
           <option key={account.bankAccountId} value={account.bankAccountId ?? index}>
-            {index + 1} - {getStringFromDecimalValue(account.balance)} руб.
+            {account.bankAccountId} - {getStringFromDecimalValue(account.balance)} руб.
           </option>
         ))}
       </select>

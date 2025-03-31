@@ -19,6 +19,7 @@ export const CreateApplicationForm = () => {
               </label>
               <input
                 id='amount'
+                min='0'
                 type='number'
                 {...form.register('amount')}
                 className={`input input-bordered w-full mt-2 ${
@@ -39,6 +40,7 @@ export const CreateApplicationForm = () => {
               </label>
               <input
                 id='term'
+                min='0'
                 type='number'
                 {...form.register('term')}
                 className={`input input-bordered w-full mt-2 ${

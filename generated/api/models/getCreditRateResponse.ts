@@ -5,8 +5,6 @@
  * OpenAPI spec version: 1.0
  */
 
-export interface PaymentModel {
-  amount?: number;
-  /** @nullable */
-  toBankAccountId?: string | null;
+export interface GetCreditRateResponse {
+  percent?: number;
 }

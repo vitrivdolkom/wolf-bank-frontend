@@ -33,6 +33,7 @@ const TransferPage = () => {
                 </label>
                 <input
                   id='amount'
+                  min='1'
                   type='number'
                   {...form.register('amount')}
                   className={`input input-bordered w-full mt-2 ${

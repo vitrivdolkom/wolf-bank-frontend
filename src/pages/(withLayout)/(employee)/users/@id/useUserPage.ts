@@ -16,6 +16,7 @@ export const useUserPage = () => {
 
   return {
     data: {
+      userId,
       bankAccounts: getApiV1BankAccount.data ?? [],
       credits: getApiV1Credit.data ?? [],
       applications: getApiV1Application.data?.applications ?? []

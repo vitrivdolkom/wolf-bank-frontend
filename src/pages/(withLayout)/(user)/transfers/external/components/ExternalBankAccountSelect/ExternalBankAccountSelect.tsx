@@ -1,5 +1,5 @@
 import { BankAccountType } from '@/generated/api/models';
-import { useGetApiV1BankAccount } from '@/generated/api/requests';
+import { useGetApiV1BankAccountAll } from '@/generated/api/requests';
 import { getStringFromDecimalValue } from '@/utils/helpers';
 
 interface ExternalBankAccountSelectProps {
@@ -15,8 +15,7 @@ export const ExternalBankAccountSelect = ({
   error,
   label
 }: ExternalBankAccountSelectProps) => {
-  // TODO use another request
-  const getApiV1BankAccount = useGetApiV1BankAccount({ limit: 100, offset: 0 });
+  const getApiV1BankAccount = useGetApiV1BankAccountAll({ limit: 100, offset: 0 });
 
   const regularAccounts =
     getApiV1BankAccount.data?.filter((account) => account.type === BankAccountType.NUMBER_1) ?? [];
@@ -35,7 +34,7 @@ export const ExternalBankAccountSelect = ({
         <option value=''>Выберите счет</option>
         {regularAccounts.map((account, index) => (
           <option key={account.bankAccountId} value={account.bankAccountId ?? index}>
-            {index + 1} - {getStringFromDecimalValue(account.balance)} руб.
+            {account.bankAccountId} - {getStringFromDecimalValue(account.balance)} руб.
           </option>
         ))}
       </select>
