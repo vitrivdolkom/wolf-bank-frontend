@@ -8,7 +8,7 @@ RUN npm install --omit=dev
 
 COPY . .
 
-RUN API_URL=http://host.docker.internal:5188 npm run build
+RUN npm run build
 
 FROM node:22.10.0-alpine AS production
 
@@ -27,4 +27,4 @@ COPY --from=build /app/generated ./generated
 
 EXPOSE 3000
 
-CMD API_URL=http://host.docker.internal:5188 npm run preview
+CMD npm run preview

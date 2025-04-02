@@ -2,7 +2,27 @@ services:
   wolf-bank-app:
     build: .
     container_name: wolf-bank-app
+    environment:
+      API_URL: http://host.docker.internal:5188
+      MONGO_URL: mongodb://host.docker.internal:27017/wolf-bank-mongo
     expose:
       - 3000
     ports:
       - "3000:3000"
+    depends_on:
+      - wolf-bank-mongo
+    networks:
+      - wolf-bank-network
+
+  wolf-bank-mongo:
+    image: mongo:4
+    container_name: wolf-bank-mongo
+    ports:
+      - "27017:27017"
+    restart: always
+    networks:
+      - wolf-bank-network
+
+networks:
+  wolf-bank-network:
+    driver: bridge

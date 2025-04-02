@@ -2,7 +2,6 @@ import { useIsMutating } from '@tanstack/react-query';
 import { useRef } from 'react';
 import { toast } from 'sonner';
 
-import { BankAccountStatus, BankAccountType } from '@/generated/api/models';
 import {
   useGetApiV1Application,
   useGetApiV1BankAccount,
