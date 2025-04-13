@@ -1,5 +1,6 @@
 import { BankAccountType } from '@/generated/api/models';
 import { useGetApiV1BankAccountAll } from '@/generated/api/requests';
+import { useProfile } from '@/utils/contexts/profile';
 import { getStringFromDecimalValue } from '@/utils/helpers';
 
 interface ExternalBankAccountSelectProps {
@@ -15,10 +16,15 @@ export const ExternalBankAccountSelect = ({
   error,
   label
 }: ExternalBankAccountSelectProps) => {
+  const profileContext = useProfile();
   const getApiV1BankAccount = useGetApiV1BankAccountAll({ limit: 100, offset: 0 });
 
   const regularAccounts =
-    getApiV1BankAccount.data?.filter((account) => account.type === BankAccountType.NUMBER_1) ?? [];
+    getApiV1BankAccount.data?.filter(
+      (account) =>
+        account.type === BankAccountType.NUMBER_1 &&
+        account.clientId !== profileContext.profile?.userId
+    ) ?? [];
 
   return (
     <div>

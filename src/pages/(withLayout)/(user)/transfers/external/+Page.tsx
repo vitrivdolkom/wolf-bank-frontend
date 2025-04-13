@@ -40,7 +40,7 @@ const TransferPage = () => {
                   className={`input input-bordered w-full mt-2 ${
                     form.formState.errors.amount ? 'input-error' : ''
                   }`}
-                  placeholder='Введите сумму кредита'
+                  placeholder='Введите сумму перевода'
                 />
                 {form.formState.errors.amount?.message && (
                   <span className='text-xs text-error mt-1 block'>

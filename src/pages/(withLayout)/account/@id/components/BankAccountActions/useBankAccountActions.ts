@@ -1,3 +1,4 @@
+import { useQueryClient } from '@tanstack/react-query';
 import { useRef, useState } from 'react';
 import { toast } from 'sonner';
 import { reload } from 'vike/client/router';
@@ -17,6 +18,7 @@ interface UseBankAccountActionsParams {
 export const useBankAccountActions = ({ bankAccount }: UseBankAccountActionsParams) => {
   const [depositAmount, setDepositAmount] = useState('');
   const [withdrawAmount, setWithdrawAmount] = useState('');
+  const queryClient = useQueryClient();
 
   const depositIdempotencyKey = useRef(generateUUID());
   const withdrawIdempotencyKey = useRef(generateUUID());
@@ -36,7 +38,10 @@ export const useBankAccountActions = ({ bankAccount }: UseBankAccountActionsPara
     depositIdempotencyKey.current = generateUUID();
     toast.success('Внесение средств прошло успешно');
     setDepositAmount('');
-    await reload();
+
+    queryClient.invalidateQueries({
+      queryKey: [`/api/v1/BankAccount/${bankAccount.bankAccountId}/history`]
+    });
   };
 
   const onWithdraw = async () => {
@@ -52,7 +57,10 @@ export const useBankAccountActions = ({ bankAccount }: UseBankAccountActionsPara
     withdrawIdempotencyKey.current = generateUUID();
     toast.success('Снятие средств прошло успешно');
     setWithdrawAmount('');
-    await reload();
+
+    queryClient.invalidateQueries({
+      queryKey: [`/api/v1/BankAccount/${bankAccount.bankAccountId}/history`]
+    });
   };
 
   const maxWithdrawAmount = Number(
