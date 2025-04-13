@@ -1,10 +1,9 @@
-import { usePageContext } from 'vike-react/usePageContext';
-
 import { postHiddenAccounts } from '@/utils/api';
 import { useHiddenAccounts } from '@/utils/contexts/hiddenAccounts';
+import { useProfile } from '@/utils/contexts/profile';
 
 export const useBankAccountCard = (bankAccountId: string) => {
-  const pageContext = usePageContext();
+  const profileContext = useProfile();
 
   const hiddenAccountsContext = useHiddenAccounts();
   const isHiddenAccount = hiddenAccountsContext.hiddenAccounts.includes(bankAccountId);
@@ -13,7 +12,7 @@ export const useBankAccountCard = (bankAccountId: string) => {
     await postHiddenAccounts({
       accountId: bankAccountId,
       hide: !isHiddenAccount,
-      userId: pageContext.user!.id
+      userId: profileContext.profile!.userId
     });
 
     hiddenAccountsContext.refetch();

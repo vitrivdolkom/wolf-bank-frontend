@@ -20,53 +20,53 @@ import type {
 } from '@tanstack/react-query';
 
 import type {
-  LoginRequest,
-  LoginResponse,
   LogoutResponse,
   RegisterRequest,
   RegisterResponse,
-  RevalidateResponse
+  RevalidateResponse,
+  TokenRequest,
+  TokenResponse
 } from '../../models';
 
 import { getInstance } from '../../../../src/utils/api/instance';
 
 type SecondParameter<T extends (...args: never) => unknown> = Parameters<T>[1];
 
-export const postApiV1AuthLogin = (
-  loginRequest: LoginRequest,
+export const postApiV1AuthToken = (
+  tokenRequest: TokenRequest,
   options?: SecondParameter<typeof getInstance>,
   signal?: AbortSignal
 ) => {
-  return getInstance<LoginResponse>(
+  return getInstance<TokenResponse>(
     {
-      url: `/api/v1/Auth/login`,
+      url: `/api/v1/Auth/token`,
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      data: loginRequest,
+      data: tokenRequest,
       signal
     },
     options
   );
 };
 
-export const getPostApiV1AuthLoginMutationOptions = <
+export const getPostApiV1AuthTokenMutationOptions = <
   TError = unknown,
   TContext = unknown
 >(options?: {
   mutation?: UseMutationOptions<
-    Awaited<ReturnType<typeof postApiV1AuthLogin>>,
+    Awaited<ReturnType<typeof postApiV1AuthToken>>,
     TError,
-    { data: LoginRequest },
+    { data: TokenRequest },
     TContext
   >;
   request?: SecondParameter<typeof getInstance>;
 }): UseMutationOptions<
-  Awaited<ReturnType<typeof postApiV1AuthLogin>>,
+  Awaited<ReturnType<typeof postApiV1AuthToken>>,
   TError,
-  { data: LoginRequest },
+  { data: TokenRequest },
   TContext
 > => {
-  const mutationKey = ['postApiV1AuthLogin'];
+  const mutationKey = ['postApiV1AuthToken'];
   const { mutation: mutationOptions, request: requestOptions } = options
     ? options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey
       ? options
@@ -74,38 +74,38 @@ export const getPostApiV1AuthLoginMutationOptions = <
     : { mutation: { mutationKey }, request: undefined };
 
   const mutationFn: MutationFunction<
-    Awaited<ReturnType<typeof postApiV1AuthLogin>>,
-    { data: LoginRequest }
+    Awaited<ReturnType<typeof postApiV1AuthToken>>,
+    { data: TokenRequest }
   > = (props) => {
     const { data } = props ?? {};
 
-    return postApiV1AuthLogin(data, requestOptions);
+    return postApiV1AuthToken(data, requestOptions);
   };
 
   return { mutationFn, ...mutationOptions };
 };
 
-export type PostApiV1AuthLoginMutationResult = NonNullable<
-  Awaited<ReturnType<typeof postApiV1AuthLogin>>
+export type PostApiV1AuthTokenMutationResult = NonNullable<
+  Awaited<ReturnType<typeof postApiV1AuthToken>>
 >;
-export type PostApiV1AuthLoginMutationBody = LoginRequest;
-export type PostApiV1AuthLoginMutationError = unknown;
+export type PostApiV1AuthTokenMutationBody = TokenRequest;
+export type PostApiV1AuthTokenMutationError = unknown;
 
-export const usePostApiV1AuthLogin = <TError = unknown, TContext = unknown>(options?: {
+export const usePostApiV1AuthToken = <TError = unknown, TContext = unknown>(options?: {
   mutation?: UseMutationOptions<
-    Awaited<ReturnType<typeof postApiV1AuthLogin>>,
+    Awaited<ReturnType<typeof postApiV1AuthToken>>,
     TError,
-    { data: LoginRequest },
+    { data: TokenRequest },
     TContext
   >;
   request?: SecondParameter<typeof getInstance>;
 }): UseMutationResult<
-  Awaited<ReturnType<typeof postApiV1AuthLogin>>,
+  Awaited<ReturnType<typeof postApiV1AuthToken>>,
   TError,
-  { data: LoginRequest },
+  { data: TokenRequest },
   TContext
 > => {
-  const mutationOptions = getPostApiV1AuthLoginMutationOptions(options);
+  const mutationOptions = getPostApiV1AuthTokenMutationOptions(options);
 
   return useMutation(mutationOptions);
 };

@@ -1,14 +1,17 @@
-import type { AxiosError, AxiosRequestConfig } from 'axios';
+import type { AxiosRequestConfig } from 'axios';
 
 import axios from 'axios';
 
-import { getApiV1AuthRefresh } from '@/generated/api/requests';
-
 import { LOCAL_STORAGE_KEYS } from '../constants';
 
-export const instance = axios.create({ baseURL: 'http://localhost:3000' });
+export const instance = axios.create({
+  baseURL: 'http://localhost:3000'
+});
+export const publicInstance = axios.create({
+  baseURL: 'http://localhost:3000'
+});
 
-instance.interceptors.request.use((config) => {
+publicInstance.interceptors.request.use((config) => {
   const token = localStorage.getItem(LOCAL_STORAGE_KEYS.TOKEN);
   if (token) {
     config.headers.Authorization = `Bearer ${token}`;
@@ -17,19 +20,28 @@ instance.interceptors.request.use((config) => {
   return config;
 });
 
-instance.interceptors.response.use(undefined, (error: AxiosError) => {
-  // if (error.status === 401 || error.status === 403) {
-  //   getApiV1AuthRefresh();
-  // }
+publicInstance.interceptors.response.use(
+  (response) => {
+    console.log('#response', response);
+    return response;
+  },
+  (error) => {
+    if (error.response.status === 401 || error.response.status === 403) {
+      console.log('#error', error);
 
-  return Promise.reject(error);
-});
+      window.location.href =
+        'http://localhost:8082/login?client_id=wem7LcxWDUArXEm-0e4nsEjkwsroaXU_&redirect_uri=http://localhost:3000/&response_type=code';
+    }
+
+    return Promise.reject(error);
+  }
+);
 
 export const getInstance = <T>(
   config: AxiosRequestConfig,
   options?: AxiosRequestConfig
 ): Promise<T> => {
-  const promise = instance({
+  const promise = publicInstance({
     ...config,
     ...options,
     headers: {

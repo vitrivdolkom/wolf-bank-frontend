@@ -1,7 +1,6 @@
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useIsMutating } from '@tanstack/react-query';
 import { useForm } from 'react-hook-form';
-import { reload } from 'vike/client/router';
 
 import { usePostApiV1User } from '@/generated/api/requests';
 

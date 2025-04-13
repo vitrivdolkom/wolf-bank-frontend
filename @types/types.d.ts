@@ -3,14 +3,8 @@ interface ProcessEnv {
   MONGO_URL: string;
 }
 
-interface PageContextUser {
-  id: string;
-  role: 'admin' | 'employee' | 'user';
-}
-
 namespace Vike {
   interface PageContext {
-    user?: PageContextUser;
     Page: () => React.JSX.Element;
   }
 }

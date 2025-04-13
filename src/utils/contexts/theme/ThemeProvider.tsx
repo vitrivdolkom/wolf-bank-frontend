@@ -2,10 +2,10 @@ import type { ReactNode } from 'react';
 
 import { useLayoutEffect, useMemo, useState } from 'react';
 
-import { useGetApiV1UserProfile } from '@/generated/api/requests';
 import { getTheme, postTheme } from '@/utils/api';
 import { LOCAL_STORAGE_KEYS } from '@/utils/constants';
 
+import { useProfile } from '../profile';
 import { ThemeContext } from './ThemeContext';
 
 interface ThemeProviderProps {
@@ -13,7 +13,7 @@ interface ThemeProviderProps {
 }
 
 export const ThemeProvider = ({ children }: ThemeProviderProps) => {
-  const getApiV1UserProfile = useGetApiV1UserProfile();
+  const profileContext = useProfile();
 
   const [theme, setTheme] = useState<Theme>(
     (localStorage.getItem(LOCAL_STORAGE_KEYS.THEME) ?? 'light') as Theme
@@ -26,27 +26,27 @@ export const ThemeProvider = ({ children }: ThemeProviderProps) => {
   };
 
   const requestTheme = async () => {
-    if (!getApiV1UserProfile.data?.id) return;
+    if (!profileContext.profile?.userId) return;
 
-    const getThemeResponse = await getTheme({ userId: getApiV1UserProfile.data.id });
-    updateTheme(getThemeResponse.theme);
+    const getThemeResponse = await getTheme({ userId: profileContext.profile.userId });
+    updateTheme(getThemeResponse.data.theme);
   };
 
   useLayoutEffect(() => {
     requestTheme();
-  }, [getApiV1UserProfile.data]);
+  }, [profileContext.profile]);
 
   const toggleTheme = async () => {
-    if (!getApiV1UserProfile.data?.id) return;
+    if (!profileContext.profile?.userId) return;
     const newTheme = theme === 'light' ? 'dark' : 'light';
 
-    await postTheme({ theme: newTheme, userId: getApiV1UserProfile.data.id });
+    await postTheme({ theme: newTheme, userId: profileContext.profile.userId });
     updateTheme(newTheme);
   };
 
   const value = useMemo(
     () => ({ value: theme, toggle: toggleTheme }),
-    [theme, getApiV1UserProfile.data]
+    [theme, profileContext.profile]
   );
 
   return <ThemeContext value={value}>{children}</ThemeContext>;

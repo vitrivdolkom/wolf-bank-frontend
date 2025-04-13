@@ -1,11 +1,9 @@
-import { ExternalLinkIcon } from 'lucide-react';
 import { usePageContext } from 'vike-react/usePageContext';
 
 import {
   useGetApiV1CreditAgreementId,
   useGetApiV1CreditAgreementIdPayments
 } from '@/generated/api/requests';
-import { ROUTES } from '@/utils/constants';
 import { formatTimestamp, getStringFromDecimalValue } from '@/utils/helpers';
 
 import {

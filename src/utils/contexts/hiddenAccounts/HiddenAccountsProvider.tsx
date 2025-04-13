@@ -1,12 +1,12 @@
 import type { ReactNode } from 'react';
 
 import { useEffect, useMemo, useState } from 'react';
-import { usePageContext } from 'vike-react/usePageContext';
 
 import { getHiddenAccounts } from '@/utils/api';
 
 import type { HiddenAccountsContextValue } from './HiddenAccountsContext';
 
+import { useProfile } from '../profile';
 import { HiddenAccountsContext } from './HiddenAccountsContext';
 
 interface HiddenAccountsProviderProps {
@@ -14,22 +14,24 @@ interface HiddenAccountsProviderProps {
 }
 
 export const HiddenAccountsProvider = ({ children }: HiddenAccountsProviderProps) => {
-  const pageContext = usePageContext();
+  const profileContext = useProfile();
   const [hiddenAccounts, setHiddenAccounts] = useState<
     HiddenAccountsContextValue['hiddenAccounts']
   >([]);
 
   const requestHiddenAccounts = async () => {
-    if (!pageContext.user?.id) return;
+    if (!profileContext.profile?.userId) return;
 
-    const getHiddenAccountsResponse = await getHiddenAccounts({ userId: pageContext.user!.id });
+    const getHiddenAccountsResponse = await getHiddenAccounts({
+      userId: profileContext.profile!.userId
+    });
 
-    setHiddenAccounts(getHiddenAccountsResponse.hiddenAccounts);
+    setHiddenAccounts(getHiddenAccountsResponse.data.hiddenAccounts);
   };
 
   useEffect(() => {
     requestHiddenAccounts();
-  }, [pageContext.user?.id]);
+  }, [profileContext.profile?.userId]);
 
   const value = useMemo(
     () => ({ hiddenAccounts, refetch: requestHiddenAccounts }),

@@ -1,20 +1,21 @@
-import { usePageContext } from 'vike-react/usePageContext';
-
 import { ApplicationCard, BankAccountCard, CreditCard, CreditRate } from '@/components';
 import { ROUTES } from '@/utils/constants';
+import { useProfile } from '@/utils/contexts/profile';
 
 import { useMainPage } from './useMainPage';
 
 const MainPage = () => {
-  const pageContext = usePageContext();
+  const profileContext = useProfile();
   const { data, functions } = useMainPage();
 
   return (
     <div className='container mx-auto px-4 py-8'>
       <h1 className='text-3xl font-bold mb-8 text-center'>Финансовая Панель</h1>
-      <div className='my-4'>
-        <CreditRate userId={pageContext.user!.id} />
-      </div>
+      {profileContext.profile?.userId && (
+        <div className='my-4'>
+          <CreditRate userId={profileContext.profile.userId} />
+        </div>
+      )}
 
       <div className='mb-6'>
         <div className='collapse collapse-arrow bg-base-200'>
@@ -25,7 +26,7 @@ const MainPage = () => {
               Оформить кредит
             </a>
             <div className='space-y-4 mt-4'>
-              {data.credits.map((credit, index) => (
+              {data.credits?.map((credit, index) => (
                 <CreditCard key={credit.agreementId} credit={credit} index={index} />
               ))}
             </div>
@@ -48,7 +49,7 @@ const MainPage = () => {
               Открыть счет
             </button>
             <div className='space-y-4 mt-4'>
-              {data.bankAccounts.map((account, index) => (
+              {data.bankAccounts?.map((account, index) => (
                 <BankAccountCard key={account.bankAccountId} index={index} bankAccount={account} />
               ))}
             </div>

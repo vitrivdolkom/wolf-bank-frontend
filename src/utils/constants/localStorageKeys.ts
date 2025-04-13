@@ -1,6 +1,6 @@
 const PREFIX = 'wolf-bank';
 
 export const LOCAL_STORAGE_KEYS = {
-  TOKEN: `${PREFIX}-token`,
-  THEME: `${PREFIX}-theme`
+  THEME: `${PREFIX}-theme`,
+  TOKEN: `${PREFIX}-token`
 };

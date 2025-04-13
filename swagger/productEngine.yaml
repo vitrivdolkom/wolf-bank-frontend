@@ -131,7 +131,7 @@ paths:
             text/json:
               schema:
                 $ref: '#/components/schemas/ListApplicationResponse'
-  /api/v1/Auth/login:
+  /api/v1/Auth/token:
     post:
       tags:
         - Auth
@@ -139,26 +139,26 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/LoginRequest'
+              $ref: '#/components/schemas/TokenRequest'
           text/json:
             schema:
-              $ref: '#/components/schemas/LoginRequest'
+              $ref: '#/components/schemas/TokenRequest'
           application/*+json:
             schema:
-              $ref: '#/components/schemas/LoginRequest'
+              $ref: '#/components/schemas/TokenRequest'
       responses:
         '200':
           description: OK
           content:
             text/plain:
               schema:
-                $ref: '#/components/schemas/LoginResponse'
+                $ref: '#/components/schemas/TokenResponse'
             application/json:
               schema:
-                $ref: '#/components/schemas/LoginResponse'
+                $ref: '#/components/schemas/TokenResponse'
             text/json:
               schema:
-                $ref: '#/components/schemas/LoginResponse'
+                $ref: '#/components/schemas/TokenResponse'
   /api/v1/Auth/register:
     post:
       tags:
@@ -1178,26 +1178,6 @@ components:
           type: integer
           format: int32
       additionalProperties: false
-    LoginRequest:
-      type: object
-      properties:
-        email:
-          type: string
-          nullable: true
-        password:
-          type: string
-          nullable: true
-      additionalProperties: false
-    LoginResponse:
-      type: object
-      properties:
-        token:
-          type: string
-          nullable: true
-        message:
-          type: string
-          nullable: true
-      additionalProperties: false
     LogoutResponse:
       type: object
       properties:
@@ -1322,6 +1302,38 @@ components:
           type: integer
           format: int64
         nanos:
+          type: integer
+          format: int32
+      additionalProperties: false
+    TokenRequest:
+      type: object
+      properties:
+        grantType:
+          type: string
+          nullable: true
+        code:
+          type: string
+          nullable: true
+        redirectUri:
+          type: string
+          nullable: true
+        clientId:
+          type: string
+          nullable: true
+        clientSecret:
+          type: string
+          nullable: true
+      additionalProperties: false
+    TokenResponse:
+      type: object
+      properties:
+        accessToken:
+          type: string
+          nullable: true
+        tokenType:
+          type: string
+          nullable: true
+        expiresIn:
           type: integer
           format: int32
       additionalProperties: false

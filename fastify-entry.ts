@@ -64,6 +64,7 @@ const startServer = async () => {
     prefix: '/api',
     rewritePrefix: '/api'
   });
+
   app.all('/*', createHandler(vikeHandler)());
 
   app.get('/theme', async (request, reply) => {

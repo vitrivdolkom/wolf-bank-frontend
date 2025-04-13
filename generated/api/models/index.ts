@@ -51,6 +51,8 @@ export * from './role';
 export * from './schedulePayment';
 export * from './schedulePaymentStatus';
 export * from './timestamp';
+export * from './tokenRequest';
+export * from './tokenResponse';
 export * from './transaction';
 export * from './transactionType';
 export * from './updateApplicationRequest';

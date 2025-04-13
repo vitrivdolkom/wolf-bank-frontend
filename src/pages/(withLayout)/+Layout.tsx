@@ -1,12 +1,12 @@
 import type { ReactNode } from 'react';
 
 import { ArrowRightLeftIcon, CreditCardIcon, HomeIcon, LogOutIcon, UserIcon } from 'lucide-react';
-import { useCookies } from 'react-cookie';
 import { usePageContext } from 'vike-react/usePageContext';
-import { navigate, reload } from 'vike/client/router';
+import { navigate } from 'vike/client/router';
 
 import { usePostApiV1AuthLogout } from '@/generated/api/requests';
 import { LOCAL_STORAGE_KEYS, ROUTES } from '@/utils/constants';
+import { useProfile } from '@/utils/contexts/profile';
 
 interface NavigationLayoutProps {
   children: ReactNode;
@@ -14,10 +14,10 @@ interface NavigationLayoutProps {
 
 const NavigationLayout = ({ children }: NavigationLayoutProps) => {
   const pageContext = usePageContext();
+  const profileContext = useProfile();
   const postApiV1AuthLogout = usePostApiV1AuthLogout();
-  const [, , removeCookies] = useCookies(['user']);
 
-  const isUser = pageContext.user?.role === 'user';
+  const isUser = profileContext.profile?.role === 'USER';
 
   const mainRoute = isUser ? ROUTES.MAIN : ROUTES.USERS;
 
@@ -27,7 +27,7 @@ const NavigationLayout = ({ children }: NavigationLayoutProps) => {
     await postApiV1AuthLogout.mutateAsync();
 
     localStorage.removeItem(LOCAL_STORAGE_KEYS.TOKEN);
-    removeCookies('user', { path: '/' });
+
     navigate(ROUTES.ROOT);
   };
 

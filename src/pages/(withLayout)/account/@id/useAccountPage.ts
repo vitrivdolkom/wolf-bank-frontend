@@ -1,7 +1,6 @@
 import { useRef } from 'react';
 import { toast } from 'sonner';
 import { usePageContext } from 'vike-react/usePageContext';
-import { reload } from 'vike/client/router';
 
 import { BankAccountStatus, BankAccountType } from '@/generated/api/models';
 import {
@@ -11,10 +10,12 @@ import {
   usePostApiV1PaymentAgreementIdCredit
 } from '@/generated/api/requests';
 import { IDS } from '@/utils/constants/ids';
+import { useProfile } from '@/utils/contexts/profile';
 import { generateUUID } from '@/utils/helpers';
 
 export const useAccountPage = () => {
   const pageContext = usePageContext();
+  const profileContext = useProfile();
   const bankAccountId = pageContext.routeParams.id;
   const getApiV1BankAccountBankAccountId = useGetApiV1BankAccountBankAccountId(bankAccountId);
   const getApiV1BankAccountBankAccountIdHistory =
@@ -22,7 +23,7 @@ export const useAccountPage = () => {
   const transactionsHistory = getApiV1BankAccountBankAccountIdHistory.data ?? [];
   const bankAccount = getApiV1BankAccountBankAccountId.data;
 
-  const isUser = pageContext.user?.role === 'user';
+  const isUser = profileContext.profile?.role === 'USER';
   const isBankAccountClosable =
     isUser &&
     bankAccount?.status !== BankAccountStatus.NUMBER_2 &&

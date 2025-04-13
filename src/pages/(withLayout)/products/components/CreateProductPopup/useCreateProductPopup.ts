@@ -2,7 +2,6 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { useIsMutating } from '@tanstack/react-query';
 import { useRef } from 'react';
 import { useForm } from 'react-hook-form';
-import { reload } from 'vike/client/router';
 
 import { usePostApiV1Product } from '@/generated/api/requests';
 import { generateUUID, getDecimalValue } from '@/utils/helpers';
