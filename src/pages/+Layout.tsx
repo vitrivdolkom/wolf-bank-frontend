@@ -4,6 +4,7 @@ import { Toaster } from 'sonner';
 
 import { HiddenAccountsProvider } from '@/utils/contexts/hiddenAccounts';
 import { ProfileProvider } from '@/utils/contexts/profile';
+import { PushNotificationsProvider } from '@/utils/contexts/pushNotifications';
 import { QueryClientProvider } from '@/utils/contexts/queryClient';
 import { ThemeProvider } from '@/utils/contexts/theme';
 
@@ -18,9 +19,11 @@ const LayoutDefault = ({ children }: LayoutDefaultProps) => (
     <Toaster />
     <QueryClientProvider>
       <ProfileProvider>
-        <ThemeProvider>
-          <HiddenAccountsProvider>{children}</HiddenAccountsProvider>
-        </ThemeProvider>
+        <PushNotificationsProvider>
+          <ThemeProvider>
+            <HiddenAccountsProvider>{children}</HiddenAccountsProvider>
+          </ThemeProvider>
+        </PushNotificationsProvider>
       </ProfileProvider>
     </QueryClientProvider>
   </main>

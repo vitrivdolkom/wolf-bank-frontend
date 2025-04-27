@@ -36,6 +36,12 @@ export const ProfileProvider = ({ children }: { children: React.ReactNode }) => 
     fetchToken();
   }, [sessionCode]);
 
+  useEffect(() => {
+    if (!getApiV1UserProfileQuery.data?.id) return;
+
+    localStorage.setItem(LOCAL_STORAGE_KEYS.USER_ID, getApiV1UserProfileQuery.data.id);
+  }, [getApiV1UserProfileQuery.data]);
+
   const profile = useMemo(
     () =>
       getApiV1UserProfileQuery.data

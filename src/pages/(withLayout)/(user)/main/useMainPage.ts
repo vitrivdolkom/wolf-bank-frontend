@@ -19,7 +19,7 @@ export const useMainPage = () => {
 
   const getApiV1Credit = useGetApiV1Credit({ limit: 10, offset: 0 });
   const getApiV1Application = useGetApiV1Application({ page: 1, pageSize: 20 });
-  const getApiV1BankAccount = useGetApiV1BankAccount({ limit: 10, offset: 0 });
+  const getApiV1BankAccount = useGetApiV1BankAccount({ limit: 100, offset: 0 });
 
   const onOpenBankAccountClick = async () => {
     await postApiV1BankAccount.mutateAsync();

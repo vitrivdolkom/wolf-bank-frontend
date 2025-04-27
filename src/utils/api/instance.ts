@@ -20,22 +20,16 @@ publicInstance.interceptors.request.use((config) => {
   return config;
 });
 
-publicInstance.interceptors.response.use(
-  (response) => {
-    console.log('#response', response);
-    return response;
-  },
-  (error) => {
-    if (error.response.status === 401 || error.response.status === 403) {
-      console.log('#error', error);
+publicInstance.interceptors.response.use(undefined, (error) => {
+  if (error.response.status === 401 || error.response.status === 403) {
+    console.log('#error', error);
 
-      window.location.href =
-        'http://localhost:8082/login?client_id=wem7LcxWDUArXEm-0e4nsEjkwsroaXU_&redirect_uri=http://localhost:3000/&response_type=code';
-    }
-
-    return Promise.reject(error);
+    window.location.href =
+      'http://localhost:8082/login?client_id=wem7LcxWDUArXEm-0e4nsEjkwsroaXU_&redirect_uri=http://localhost:3000/&response_type=code';
   }
-);
+
+  return Promise.reject(error);
+});
 
 export const getInstance = <T>(
   config: AxiosRequestConfig,

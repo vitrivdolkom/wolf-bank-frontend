@@ -78,6 +78,7 @@ web_modules/
 .env.test.local
 .env.production.local
 .env.local
+.env.docker
 
 # parcel-bundler cache (https://parceljs.org/)
 .cache
@@ -144,3 +145,5 @@ cdk.out
 ## Panda
 styled-system
 styled-system-studio
+
+public/firebase-config.json

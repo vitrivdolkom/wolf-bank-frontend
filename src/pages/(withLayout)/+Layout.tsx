@@ -27,6 +27,7 @@ const NavigationLayout = ({ children }: NavigationLayoutProps) => {
     await postApiV1AuthLogout.mutateAsync();
 
     localStorage.removeItem(LOCAL_STORAGE_KEYS.TOKEN);
+    localStorage.removeItem(LOCAL_STORAGE_KEYS.USER_ID);
 
     navigate(ROUTES.ROOT);
   };
