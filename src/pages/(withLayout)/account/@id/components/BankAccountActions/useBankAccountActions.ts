@@ -1,7 +1,5 @@
-import { useQueryClient } from '@tanstack/react-query';
 import { useRef, useState } from 'react';
 import { toast } from 'sonner';
-import { reload } from 'vike/client/router';
 
 import type { BankAccountDto } from '@/generated/api/models';
 
@@ -18,7 +16,7 @@ interface UseBankAccountActionsParams {
 export const useBankAccountActions = ({ bankAccount }: UseBankAccountActionsParams) => {
   const [depositAmount, setDepositAmount] = useState('');
   const [withdrawAmount, setWithdrawAmount] = useState('');
-  const queryClient = useQueryClient();
+  // const queryClient = useQueryClient();
 
   const depositIdempotencyKey = useRef(generateUUID());
   const withdrawIdempotencyKey = useRef(generateUUID());
@@ -39,9 +37,9 @@ export const useBankAccountActions = ({ bankAccount }: UseBankAccountActionsPara
     toast.success('Внесение средств прошло успешно');
     setDepositAmount('');
 
-    queryClient.invalidateQueries({
-      queryKey: [`/api/v1/BankAccount/${bankAccount.bankAccountId}/history`]
-    });
+    // queryClient.invalidateQueries({
+    //   queryKey: [`/api/v1/BankAccount/${bankAccount.bankAccountId}/history`]
+    // });
   };
 
   const onWithdraw = async () => {
@@ -58,9 +56,9 @@ export const useBankAccountActions = ({ bankAccount }: UseBankAccountActionsPara
     toast.success('Снятие средств прошло успешно');
     setWithdrawAmount('');
 
-    queryClient.invalidateQueries({
-      queryKey: [`/api/v1/BankAccount/${bankAccount.bankAccountId}/history`]
-    });
+    // queryClient.invalidateQueries({
+    //   queryKey: [`/api/v1/BankAccount/${bankAccount.bankAccountId}/history`]
+    // });
   };
 
   const maxWithdrawAmount = Number(
