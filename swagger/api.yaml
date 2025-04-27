@@ -530,6 +530,34 @@ paths:
             text/json:
               schema:
                 $ref: '#/components/schemas/CreateEmployeeResponse'
+  /api/v1/Firebase:
+    post:
+      tags:
+        - Firebase
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/FirebaseRegisterRequest'
+          text/json:
+            schema:
+              $ref: '#/components/schemas/FirebaseRegisterRequest'
+          application/*+json:
+            schema:
+              $ref: '#/components/schemas/FirebaseRegisterRequest'
+      responses:
+        '200':
+          description: OK
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/FirebaseRegisterResponse'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FirebaseRegisterResponse'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/FirebaseRegisterResponse'
   '/api/v1/Payment/{bank_account_id}/deposit':
     post:
       tags:
@@ -1074,6 +1102,23 @@ components:
         newBalance:
           $ref: '#/components/schemas/DecimalValue'
         message:
+          type: string
+          nullable: true
+      additionalProperties: false
+    FirebaseRegisterRequest:
+      type: object
+      properties:
+        token:
+          type: string
+          nullable: true
+      additionalProperties: false
+    FirebaseRegisterResponse:
+      type: object
+      properties:
+        userId:
+          type: string
+          nullable: true
+        token:
           type: string
           nullable: true
       additionalProperties: false

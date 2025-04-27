@@ -1,6 +1,6 @@
 export default {
   'wolf-bank-client': {
-    input: { target: './swagger/productEngine.yaml' },
+    input: { target: './swagger/api.yaml' },
     output: {
       mode: 'tags-split',
       schemas: './generated/api/models',

@@ -23,6 +23,8 @@ export * from './createUserResponse';
 export * from './decimal';
 export * from './decimalValue';
 export * from './depositResponse';
+export * from './firebaseRegisterRequest';
+export * from './firebaseRegisterResponse';
 export * from './getApiV1ApplicationParams';
 export * from './getApiV1BankAccountAllParams';
 export * from './getApiV1BankAccountBankAccountIdHistoryParams';

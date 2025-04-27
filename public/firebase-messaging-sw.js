@@ -16,14 +16,20 @@ fetch('/firebase-config.json')
     messaging.onBackgroundMessage((payload) => {
       console.log('[firebase-messaging-sw.js] Received background message ', payload);
 
-      const notification = payload.data;
+      if (!payload.notification || !payload.notification.body || !payload.notification.title) {
+        return;
+      }
 
-      const userId = window.localStorage.getItem('wolf-bank-user-id');
-      console.log('#userId ', userId);
-      if (userId !== notification.userId) return;
+      const body = JSON.parse(payload.notification.body);
+      if (!body || !body.dateTime || !body.amount || !body.userId) return;
 
-      window.self.registration.showNotification(`Test notification`, {
-        body: 'Body'
+      const title = payload.notification.title === 'deposit' ? 'Пополнение' : 'Снятие';
+
+      const localStorageUserId = window.localStorage.getItem('wolf-bank-firebase-user-id');
+      if (localStorageUserId !== body.userId) return;
+
+      window.self.registration.showNotification(title, {
+        body: `${body.dateTime} - ${body.amount}руб.`
       });
     });
   })

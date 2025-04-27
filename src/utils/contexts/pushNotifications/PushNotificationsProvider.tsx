@@ -4,6 +4,9 @@ import { getToken, onMessage } from 'firebase/messaging';
 import { useEffect } from 'react';
 import { toast } from 'sonner';
 
+import { usePostApiV1Firebase } from '@/generated/api/requests';
+import { LOCAL_STORAGE_KEYS } from '@/utils/constants';
+
 import { useProfile } from '../profile';
 import { messaging } from './messaging';
 import { PushNotificationsContext } from './PushNotificationsContext';
@@ -15,7 +18,9 @@ interface PushNotificationsProviderProps {
 export const PushNotificationsProvider = ({ children }: PushNotificationsProviderProps) => {
   const profileContext = useProfile();
 
-  const requestPermission = async (userId: string) => {
+  const postApiV1Firebase = usePostApiV1Firebase();
+
+  const requestPermission = async () => {
     const serviceWorkerRegistration = await navigator.serviceWorker.register(
       '/firebase-messaging-sw.js'
     );
@@ -27,9 +32,11 @@ export const PushNotificationsProvider = ({ children }: PushNotificationsProvide
         serviceWorkerRegistration
       });
 
-      // TODO send token and user Id
-      console.log('#token', token);
-      console.log('#userId', userId);
+      const postApiV1FirebaseResponse = await postApiV1Firebase.mutateAsync({ data: { token } });
+
+      if (postApiV1FirebaseResponse.userId) {
+        localStorage.setItem(LOCAL_STORAGE_KEYS.FIREBASE_USER_ID, postApiV1FirebaseResponse.userId);
+      }
     } else if (permission === 'denied') {
       toast.error('You denied for the notification');
     }
@@ -38,16 +45,30 @@ export const PushNotificationsProvider = ({ children }: PushNotificationsProvide
   useEffect(() => {
     if (!profileContext.profile?.userId) return;
 
-    requestPermission(profileContext.profile.userId);
+    requestPermission();
 
     onMessage(messaging, (payload) => {
-      console.log('#notification', payload);
-      if (payload.notification) {
-        toast.info(payload.notification.title, {
-          description: payload.notification.body,
-          icon: payload.notification.icon
-        });
+      console.log('[PushNotificationsProvider] Received foreground message ', payload);
+
+      if (!payload.notification || !payload.notification.body || !payload.notification.title) {
+        return;
       }
+
+      const body = JSON.parse(payload.notification.body) as {
+        dateTime: string;
+        userId: string;
+        amount: number;
+      };
+      if (!body || !body.dateTime || !body.amount || !body.userId) return;
+
+      const title = payload.notification.title === 'deposit' ? 'Пополнение' : 'Снятие';
+
+      const localStorageUserId = window.localStorage.getItem(LOCAL_STORAGE_KEYS.FIREBASE_USER_ID);
+      if (localStorageUserId !== body.userId) return;
+
+      toast.info(title, {
+        description: `${body.dateTime} - ${body.amount}руб.`
+      });
     });
   }, [profileContext.profile?.userId]);
 
